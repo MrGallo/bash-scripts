@@ -3,14 +3,14 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.2.0"
+VERSION="0.2.1"
 
 
 update () {
     echo "Checking for updates..."
     # download most recent version
     rm -f "$NEW_FILE"
-    wget -qP /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
+    wget -qP --no-cache /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
         NF_V=$(head -6 $NEW_FILE | tail -1)
         NF_V="${NF_V//[^0-9]/}"
         NF_V=$((10#$NF_V))
@@ -26,7 +26,7 @@ update () {
             rm -f "$NEW_FILE"
             
             echo "Running updated version..."
-            $SCRIPT_NAME $ARGS
+            bash $SCRIPT_NAME $ARGS
             
             exit 0
         else
