@@ -3,29 +3,32 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.1.4"
+VERSION="0.1.5"
 
 update () {
     echo "Checking for updates..."
     echo
     
     # download most recent version
+    rm -f "$NEW_FILE"
     wget -P /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
         echo "Download complete"
         
-        NF_V_LINE=$(head -6 "$NEW_FILE" | tail -1)
-        NF_V=${NF_V_LINE//[^0-9]/}
+        NF_V=$(head -6 $NEW_FILE | tail -1)
+        NF_V="${NF_V//[^0-9]/}"
         
-        if [ "$VERSION" != "$NF_V" ]; then 
-            echo "Versions different.\nUpdating current version"
+        if [ "${VERSION//[^0-9]/}" != "$NF_V" ]; then 
+            echo "Versions different."
+            echo "Updating current version."
             cp "$NEW_FILE" "$SCRIPT_NAME"
             rm -f "$NEW_FILE"
             
             echo "run the new script (in theory)"
-            $SCRIPT_NAME $ARGS
+            # $SCRIPT_NAME $ARGS
             
             exit 0
         else
+            echo "Current version up to date."
             rm -f "$NEW_FILE"
         fi
     }
@@ -34,7 +37,8 @@ update () {
 }
 
 main () {
-    echo "Running version $VERSION"
+    echo "$0 v$VERSION"
+    echo
     if [ ! $ARGS ]; then
         echo "Usage:"
         echo "$0 start - Starts a test session"
