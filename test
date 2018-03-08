@@ -15,6 +15,7 @@ update () {
         cp "$NEW_FILE" "$SCRIPT_NAME"
         rm -f "$NEW_FILE"
         
+        echo "run the new script (in theory)"
         $SCRIPT_NAME $ARGS
         
         exit 0
