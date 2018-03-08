@@ -6,6 +6,7 @@ if [ ! $1 ]; then
     echo "Usage:"
     echo "$0 start - Starts a test session"
     echo "$0 end   - Ends a test session"
+    echo
     exit 0
 fi
 
