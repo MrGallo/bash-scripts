@@ -25,7 +25,7 @@ update () {
 }
 
 main () {
-    
+    echo "Running version $VERSION"
     if [ ! $ARGS ]; then
         echo "Usage:"
         echo "$0 start - Starts a test session"
