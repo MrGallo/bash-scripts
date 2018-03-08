@@ -11,7 +11,7 @@ update () {
     
     # download most recent version
     rm -f "$NEW_FILE"
-    wget -P /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
+    wget -qP /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
         echo "Download complete"
         
         NF_V=$(head -6 $NEW_FILE | tail -1)
