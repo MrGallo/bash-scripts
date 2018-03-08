@@ -10,7 +10,7 @@ update () {
     echo "Checking for updates..."
     # download most recent version
     rm -f "$NEW_FILE"
-    wget -qP --no-cache /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
+    wget -qP /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
         NF_V=$(head -6 $NEW_FILE | tail -1)
         NF_V="${NF_V//[^0-9]/}"
         NF_V=$((10#$NF_V))
