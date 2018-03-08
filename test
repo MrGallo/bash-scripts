@@ -3,7 +3,7 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/test"
-VERSION="0.1.1"
+VERSION="0.1.2"
 
 update () {
     echo "Updating..."
