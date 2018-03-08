@@ -3,22 +3,31 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.1.3"
+VERSION="0.1.4"
 
 update () {
-    echo "Updating..."
+    echo "Checking for updates..."
     echo
     
     # download most recent version
     wget -P /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
         echo "Download complete"
-        cp "$NEW_FILE" "$SCRIPT_NAME"
-        rm -f "$NEW_FILE"
         
-        echo "run the new script (in theory)"
-        $SCRIPT_NAME $ARGS
+        NF_V_LINE=$(head -6 "$NEW_FILE" | tail -1)
+        NF_V=${NF_V_LINE//[^0-9]/}
         
-        exit 0
+        if [ "$VERSION" != "$NF_V" ]; then 
+            echo "Versions different.\nUpdating current version"
+            cp "$NEW_FILE" "$SCRIPT_NAME"
+            rm -f "$NEW_FILE"
+            
+            echo "run the new script (in theory)"
+            $SCRIPT_NAME $ARGS
+            
+            exit 0
+        else
+            rm -f "$NEW_FILE"
+        fi
     }
 
     
