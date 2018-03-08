@@ -1,13 +1,39 @@
 #!/bin/bash
 
-OPTION=$1
+SCRIPT_NAME="$0"
+ARGS="$@"
+NEW_FILE="/tmp/test"
+VERSION="0.1.1"
 
-if [ ! $1 ]; then
-    echo "Usage:"
-    echo "$0 start - Starts a test session"
-    echo "$0 end   - Ends a test session"
+update () {
+    echo "Updating..."
     echo
-    exit 0
-fi
+    
+    # download most recent version
+    wget -P /tmp/ "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test" && {
+        echo "Download complete"
+        cp "$NEW_FILE" "$SCRIPT_NAME"
+        rm -f "$NEW_FILE"
+        
+        echo "running new version"
+        $SCRIPT_NAME $ARGS
+        
+        exit 0
+    }
 
+    
+}
 
+main () {
+    
+    if [ ! $ARGS ]; then
+        echo "Usage:"
+        echo "$0 start - Starts a test session"
+        echo "$0 end   - Ends a test session"
+        echo
+        exit 0
+    fi
+}
+
+update
+main
