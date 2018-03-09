@@ -23,8 +23,8 @@ main() {
 installTestModeScript() {
     echo "Installing test-mode script into /usr/local/bin."
     echo "Adding system alias 'test-mode'."
-    sudo wget -qO /usr/local/bin/ "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
-    echo "alias test-mode='bash test-mode'" >> ~/.bash_aliases
+    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
+    echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
 }
 
 noUpdates() {
