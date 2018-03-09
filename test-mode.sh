@@ -40,19 +40,36 @@ update () {
     
 }
 
+showHelp() {
+    echo "Usage: test-mode {start|stop}"
+    echo "options:"
+    echo "    start  - Starts a test session"
+    echo "    stop   - Ends a test session"
+    echo
+}
+
+doStart() {
+    echo starting
+}
+
+doStop() {
+    echo stopping
+}
+
 main () {
     echo "TestMode v$VERSION of $DATE, by $AUTHOR."
     echo
     
     if [ ! $ARGS ]; then
-        echo "Usage:"
-        echo "$0 start - Starts a test session"
-        echo "$0 end   - Ends a test session"
-        echo
+        showHelp
         exit 0
-    else
-        echo "has args"
     fi
+    
+    case "$ARGS" in
+        start) doStart ;;
+         stop) doStop  ;;
+            *) showHelp && exit 0
+    esac
     
 }
 
