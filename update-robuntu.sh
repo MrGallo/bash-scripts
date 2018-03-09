@@ -5,7 +5,7 @@ RUN_REVISION="$1"
 TMP_FILE="/tmp/$0"
 VERSION="1"
 REVISION="1"
-DATE="08 March 2018"
+DATE="09 March 2018"
 AUTHOR="Mr. Gallo"
 
 
@@ -15,13 +15,16 @@ main() {
     echo
     
     case "$RUN_REVISION" in
-            1) updates1 ;;           # ;& cascades
+            1) installTestModeScript ;;           # ;& cascades
             *) noUpdates && exit 0
     esac
 }
 
-updates1() {
-    echo "Installing updates..."
+installTestModeScript() {
+    echo "Installing test-mode script into /usr/local/bin."
+    echo "Adding system alias 'test-mode'."
+    sudo wget -qO /usr/local/bin/ "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
+    echo "alias test-mode='bash test-mode'" >> ~/.bash_aliases
 }
 
 noUpdates() {
@@ -32,9 +35,8 @@ noUpdates() {
 
 update () {
     # download most recent version
-    rm -f "$TMP_FILE"
     
-    wget -qP /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
+    wget -qO /tmp/"$0" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
         tmpFileV=$(head -6 $TMP_FILE | tail -1)
         tmpFileR=$(head -7 $TMP_FILE | tail -1)
         
