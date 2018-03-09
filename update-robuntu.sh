@@ -4,33 +4,38 @@ SCRIPT_NAME="$0"
 ARGS="$@"
 TMP_FILE="/tmp/$0"
 VERSION="0"
-SUBVERSION="2"
+REVISION="3"
 DATE="08 March 2018"
 AUTHOR="Mr. Gallo"
 
 update () {
     # download most recent version
     rm -f "$TMP_FILE"
+    
     wget -qP /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
-        tmpFileVersion=$(head -6 $TMP_FILE | tail -1)
-        tmpFileVersion="${NF_V//[^0-9]/}"
-        tmpFileVersion=$((10#$NF_V))
+        tmpFileV=$(head -6 $TMP_FILE | tail -1)
+        tmpFileR=$(head -7 $TMP_FILE | tail -1)
         
-        echo tmpFileVersion
+        tmpFileV="${tmpFileV//[^0-9]/}"
+        tmpFileV=$((10#$tmpFileV))
         
-        currentVersion="${VERSION//[^0-9]/}"
-        currentVersion=$((10#currentVersion))
+        tmpFileR="${tmpFileR//[^0-9]/}"
+        tmpFileR=$((10#$tmpFileR))
         
-        echo currentVersion
+        tmpFileVersion=$(( $tmpFileV * 1000 + $tmpFileR ))
+        currentVersion=$(( $VERSION * 1000 + $REVISION ))
         
-        exit 0
+        echo $tmpFileVersion
+        echo $currentVersion
         
-        if (( NF_V > CURR_V )); then 
+        
+        if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
             echo "Updating to latest version."
             cp "$TMP_FILE" "$SCRIPT_NAME"
             rm -f "$TMP_FILE"
             
+            exit 0
             #echo "Running updated version..."
             bash $SCRIPT_NAME $ARGS
             
