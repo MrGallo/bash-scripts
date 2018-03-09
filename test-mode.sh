@@ -3,8 +3,8 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.2.6"
-DATE="March 8 2018"
+VERSION="0.2.7"
+DATE="March 9 2018"
 AUTHOR="Mr. Gallo"
 
 
@@ -53,7 +53,26 @@ doStart() {
 }
 
 doStop() {
-    echo stopping
+
+    clear
+
+    echo "Deleting all new files since the test started."
+    git add -A && git stash -a && git stash drop
+
+    #    change taskbar alpha
+    xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 100
+    # turn off background image
+    xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 5
+
+    clear
+    echo "
+      _____                   _ 
+     |  __ \                 | |
+     | |  | | ___  _ __   ___| |
+     | |  | |/ _ \| '_ \ / _ \ |
+     | |__| | (_) | | | |  __/_|
+     |_____/ \___/|_| |_|\___(_)
+                              "
 }
 
 main () {
