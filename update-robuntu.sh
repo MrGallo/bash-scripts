@@ -4,7 +4,7 @@ SCRIPT_NAME="$0"
 RUN_REVISION="$1"
 TMP_FILE="/tmp/$0"
 VERSION="1"
-REVISION="1"
+REVISION="2"
 DATE="09 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -15,12 +15,22 @@ main() {
     echo
     
     case "$RUN_REVISION" in
-            1) installTestModeScript ;;           # ;& cascades
+            1) installTestModeScript_20180309 ;&           # ;& cascades
+            2) fixBottomPanel_20180309 ;;
             *) noUpdates && exit 0
     esac
 }
 
-installTestModeScript() {
+fixBottomPanel_20180309() {
+    xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha  -s 100
+    xfconf-query -c xfce4-panel -p /panels/panel-1/background-style  -s 1
+    xfconf-query -c xfce4-panel -p /panels/panel-1/length            -s 100
+    xfconf-query -c xfce4-panel -p /panels/panel-1/position          -s 'p=8;x=683;y=752'
+    xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked   -s true
+    xfconf-query -c xfce4-panel -p /panels/panel-1/size              -s 30
+}
+
+installTestModeScript_20180309() {
     echo "Installing test-mode script into /usr/local/bin."
     echo "Adding system alias 'test-mode'."
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
