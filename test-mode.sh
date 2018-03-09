@@ -3,7 +3,7 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.2.4"
+VERSION="0.2.5"
 DATE="March 8 2018"
 AUTHOR="Mr. Gallo"
 
