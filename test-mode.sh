@@ -43,8 +43,8 @@ update () {
 showHelp() {
     echo "Usage: test-mode {start|stop}"
     echo "options:"
-    echo "    start  - Starts a test session"
-    echo "    stop   - Ends a test session"
+    echo "    start  - Starts test-writing mode"
+    echo "    stop   - Stops test-writing mode"
     echo
 }
 
