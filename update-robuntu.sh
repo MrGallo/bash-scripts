@@ -22,6 +22,7 @@ main() {
 }
 
 fixBottomPanel_20180309() {
+    echo "Applying bottom panel lock and position adjustment"
     xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha  -s 100
     xfconf-query -c xfce4-panel -p /panels/panel-1/background-style  -s 1
     xfconf-query -c xfce4-panel -p /panels/panel-1/length            -s 100
