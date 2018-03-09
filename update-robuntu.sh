@@ -1,10 +1,10 @@
 #!/bin/bash
 
 SCRIPT_NAME="$0"
-ARGS="$@"
+RUN_REVISION="$1"
 TMP_FILE="/tmp/$0"
 VERSION="0"
-REVISION="3"
+REVISION="4"
 DATE="08 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -25,19 +25,14 @@ update () {
         tmpFileVersion=$(( $tmpFileV * 1000 + $tmpFileR ))
         currentVersion=$(( $VERSION * 1000 + $REVISION ))
         
-        echo $tmpFileVersion
-        echo $currentVersion
-        
-        
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
             echo "Updating to latest version."
             cp "$TMP_FILE" "$SCRIPT_NAME"
             rm -f "$TMP_FILE"
             
-            exit 0
             #echo "Running updated version..."
-            bash $SCRIPT_NAME $ARGS
+            bash $SCRIPT_NAME $(( $REVISION + 1))
             
             exit 0
         else
@@ -48,14 +43,19 @@ update () {
 }
 
 showHelp() {
-    echo "UpdateRobuntu v$VERSION.$SUBVERSION of $DATE, by $AUTHOR."
-    echo
     echo "Usage: update-robuntu"
     echo
 }
 
 main() {
-    showHelp
+    echo "UpdateRobuntu v$VERSION.$SUBVERSION of $DATE, by $AUTHOR."
+    echo
+    
+    case "$RUN_REVISION" in
+            1) echo updates-1 ;&
+            2) echo updates-2 ;;
+            *) showHelp && exit 0
+    esac
 }
 
 update
