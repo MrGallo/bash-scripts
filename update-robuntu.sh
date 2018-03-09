@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SCRIPT_NAME="$0"
+SCRIPT_NAME=`basename "$0"`
 RUN_REVISION="$1"
-TMP_FILE="/tmp/$0"
+TMP_FILE="/tmp/$SCRIPT_NAME"
 VERSION="1"
 REVISION="2"
 DATE="09 March 2018"
@@ -52,7 +52,7 @@ noUpdates() {
 update () {
     # download most recent version
     
-    wget -qO /tmp/"$0" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
+    wget -qO /tmp/"$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
         tmpFileV=$(head -6 $TMP_FILE | tail -1)
         tmpFileR=$(head -7 $TMP_FILE | tail -1)
         
@@ -68,11 +68,11 @@ update () {
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
             echo "Updating to latest version."
-            cp "$TMP_FILE" "$SCRIPT_NAME"
+            cp "$TMP_FILE" "$0"
             rm -f "$TMP_FILE"
             
             #echo "Running updated version..."
-            bash $SCRIPT_NAME $(( $REVISION + 1))
+            bash $0 $(( $REVISION + 1))
             
             exit 0
         else
