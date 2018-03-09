@@ -48,7 +48,7 @@ showHelp() {
 }
 
 main() {
-    echo "UpdateRobuntu v$VERSION.$SUBVERSION of $DATE, by $AUTHOR."
+    echo "UpdateRobuntu v$VERSION.$REVISION of $DATE, by $AUTHOR."
     echo
     
     case "$RUN_REVISION" in
