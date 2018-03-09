@@ -23,12 +23,7 @@ main() {
 
 fixBottomPanel_20180309() {
     echo "Applying bottom panel lock and position adjustment"
-    xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha  -s 100
-    xfconf-query -c xfce4-panel -p /panels/panel-1/background-style  -s 1
-    xfconf-query -c xfce4-panel -p /panels/panel-1/length            -s 100
-    xfconf-query -c xfce4-panel -p /panels/panel-1/position          -s 'p=8;x=683;y=752'
-    xfconf-query -c xfce4-panel -p /panels/panel-1/position-locked   -s true
-    xfconf-query -c xfce4-panel -p /panels/panel-1/size              -s 30
+    wget -q "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml" -O ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
 }
 
 installTestModeScript_20180309() {
@@ -38,9 +33,11 @@ installTestModeScript_20180309() {
     echo "Adding system alias 'test-mode'."
     echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
     
-    echo "Initializing git repository in home directory"
+    echo "Initializing git repository in home directory."
+    echo "Could take a while..."
     cd ~
     git init && git add -A && git commit -m "Initial commit"
+    echo "... Done!"
 }
 
 noUpdates() {
