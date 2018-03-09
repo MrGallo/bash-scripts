@@ -3,7 +3,7 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.2.7"
+VERSION="0.2.8"
 DATE="March 9 2018"
 AUTHOR="Mr. Gallo"
 
@@ -49,7 +49,21 @@ showHelp() {
 }
 
 doStart() {
-    echo starting
+    clear 
+    
+    git add -A
+    git commit -m "Pre-test save"
+
+    #    change taskbar alpha
+    xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 0
+    # turn off background image
+    xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 0
+    
+    echo "  ____  _             _           _ 
+ / ___|| |_ __ _ _ __| |_ ___  __| |
+ \___ \| __/ _\` | '__| __/ _ \/ _\` |
+  ___) | || (_| | |  | ||  __/ (_| |
+ |____/ \__\__,_|_|   \__\___|\__,_|"
 }
 
 doStop() {
