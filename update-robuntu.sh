@@ -3,10 +3,32 @@
 SCRIPT_NAME="$0"
 RUN_REVISION="$1"
 TMP_FILE="/tmp/$0"
-VERSION="0"
-REVISION="4"
+VERSION="1"
+REVISION="1"
 DATE="08 March 2018"
 AUTHOR="Mr. Gallo"
+
+
+
+main() {
+    echo "UpdateRobuntu v$VERSION.$REVISION of $DATE, by $AUTHOR."
+    echo
+    
+    case "$RUN_REVISION" in
+            1) updates1 ;;           # ;& cascades
+            *) noUpdates && exit 0
+    esac
+}
+
+updates1() {
+    echo "Installing updates..."
+}
+
+noUpdates() {
+    echo "No updates."
+    echo
+}
+
 
 update () {
     # download most recent version
@@ -40,24 +62,6 @@ update () {
             rm -f "$TMP_FILE"
         fi
     }
-}
-
-showHelp() {
-    echo "Usage: update-robuntu"
-    echo
-}
-
-main() {
-    echo "UpdateRobuntu v$VERSION.$REVISION of $DATE, by $AUTHOR."
-    echo
-    
-    case "$RUN_REVISION" in
-            1) echo updates-1 ;&
-            2) echo updates-2 ;&
-            3) echo updates-3 ;&
-            4) echo updates-4 ;;
-            *) showHelp && exit 0
-    esac
 }
 
 update
