@@ -4,6 +4,8 @@ SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
 VERSION="0.2.4"
+DATE="March 8 2018"
+AUTHOR="Mr. Gallo"
 
 
 update () {
@@ -20,16 +22,17 @@ update () {
 
         
         if (( NF_V > INT_VERSION )); then 
+            echo "Newer version found."
             echo "Updating current version."
             cp "$NEW_FILE" "$SCRIPT_NAME"
             rm -f "$NEW_FILE"
             
-            # echo "Running updated version..."
+            echo "Running updated version..."
             bash $SCRIPT_NAME $ARGS
             
             exit 0
         else
-            # echo "Current version up to date."
+            echo "Current version up to date."
             rm -f "$NEW_FILE"
         fi
     }
@@ -38,14 +41,17 @@ update () {
 }
 
 main () {
-    echo "$0 v$VERSION"
+    echo "TestMode v$VERSION of $DATE, by $AUTHOR."
     echo
+    
     if [ ! $ARGS ]; then
         echo "Usage:"
         echo "$0 start - Starts a test session"
         echo "$0 end   - Ends a test session"
         echo
         exit 0
+    else
+        echo "has args"
     fi
     
 }
