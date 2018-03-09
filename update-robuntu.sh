@@ -37,8 +37,8 @@ installTestModeScript_20180309() {
     echo "Could take a while..."
     cd ~
     git init && git add -A 
-    git config --local user.name="robuntu"
-    git config --local user.email="robuntu@stro.ycdsb.ca"
+    git config --local user.name "robuntu"
+    git config --local user.email "robuntu@stro.ycdsb.ca"
     git commit -m "Initial commit"
     echo "... Done!"
 }
