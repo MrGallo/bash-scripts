@@ -33,9 +33,14 @@ fixBottomPanel_20180309() {
 
 installTestModeScript_20180309() {
     echo "Installing test-mode script into /usr/local/bin."
-    echo "Adding system alias 'test-mode'."
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
+    
+    echo "Adding system alias 'test-mode'."
     echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
+    
+    echo "Initializing git repository in home directory"
+    cd ~
+    git init && git add -A && git commit -m "Initial commit"
 }
 
 noUpdates() {
