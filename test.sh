@@ -20,17 +20,16 @@ update () {
 
         
         if (( NF_V > INT_VERSION )); then 
-            echo "Newer version found."
             echo "Updating current version."
             cp "$NEW_FILE" "$SCRIPT_NAME"
             rm -f "$NEW_FILE"
             
-            echo "Running updated version..."
+            # echo "Running updated version..."
             bash $SCRIPT_NAME $ARGS
             
             exit 0
         else
-            echo "Current version up to date."
+            # echo "Current version up to date."
             rm -f "$NEW_FILE"
         fi
     }
