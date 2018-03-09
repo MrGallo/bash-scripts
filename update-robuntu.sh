@@ -53,7 +53,9 @@ main() {
     
     case "$RUN_REVISION" in
             1) echo updates-1 ;&
-            2) echo updates-2 ;;
+            2) echo updates-2 ;&
+            3) echo updates-3 ;&
+            4) echo updates-4 ;;
             *) showHelp && exit 0
     esac
 }
