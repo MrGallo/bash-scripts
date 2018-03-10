@@ -108,9 +108,7 @@ update () {
     }
 }
 
-#TODO: reenable install
-#install
-# "TODO: re-enable update"
-#update
 
+install
+update
 main
