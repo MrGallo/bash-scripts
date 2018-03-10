@@ -1,18 +1,33 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-ARG="$1"
 VERSION="1"
-REVISION="3"
+REVISION="4"
 DATE="10 March 2018"
 AUTHOR="Mr. Gallo"
 
 TMP_FILE="/tmp/$SCRIPT_NAME"
 LEVEL_FILE=~/.robuntu_update_level
+ARG1="$1"
+ARG2="$2"
 
 main() {
     echo "UpdateRobuntu v$VERSION.$REVISION of $DATE, by $AUTHOR."
     echo
+    
+    if [ "$ARG1" = "-set-level" ]; then
+        if [ "$ARG2" != "" ]; then
+            echo "Setting Update Level to $ARG2"
+            echo "$ARG2" > "$LEVEL_FILE"
+        else
+            echo "Error: Need to specify a level to set."
+            echo "E.g., update-robuntu -set-level 3"
+        fi
+        exit 0
+    fi
+    
+    install
+    update
     
     if [ ! -f $LEVEL_FILE ]; then 
         echo "UpdateRobuntu was not installed properly. Missing $LEVEL_FILE!"
@@ -20,7 +35,6 @@ main() {
     fi
     
     CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
-    
     DO_LEVEL=$((CURRENT_LEVEL + 1))
     
     case "$DO_LEVEL" in
@@ -43,7 +57,7 @@ installTestModeScript_20180309() {
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
     
     echo "Adding system alias 'test-mode'."
-    echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
+    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
     
     echo "Initializing git repository in home directory."
     echo "Could take a while..."
@@ -67,8 +81,8 @@ install () {
     FILE_PATH="/usr/local/bin/"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME"
-        echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
-        [ ! -f ~/.robuntu_update_level ] && echo "0" > ~/.robuntu_update_level
+        sudo echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
+        [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
         
         echo "Running locally"
         bash $FILE_PATH$SCRIPT_NAME
@@ -80,8 +94,8 @@ update () {
     # download most recent version
     
     wget -qO /tmp/"$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
-        tmpFileV=$(head -5 $TMP_FILE | tail -1)
-        tmpFileR=$(head -6 $TMP_FILE | tail -1)
+        tmpFileV=$(head -4 $TMP_FILE | tail -1)
+        tmpFileR=$(head -5 $TMP_FILE | tail -1)
         
         tmpFileV="${tmpFileV//[^0-9]/}"
         tmpFileV=$((10#$tmpFileV))
@@ -108,7 +122,4 @@ update () {
     }
 }
 
-
-install
-update
 main
