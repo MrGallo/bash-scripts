@@ -15,16 +15,16 @@ ARG2="$2"
 main() {
     case "$ARG1" in
         "-set-level") set_level    ;;
-            "-level") get_level    ;;
+        "-level")     get_level    ;;
             
-          "-version") ;&
-                "-v") get_version  ;;
+        "-version")   ;&
+        "-v")         get_version  ;;
                 
-         "-revision") ;&
-                "-r") get_revision ;;
+        "-revision")  ;&
+        "-r")         get_revision ;;
                 
-                "-h") ;&
-             "-help") show_help    ;;
+        "-h")         ;&
+        "-help")      show_help    ;;
     esac
     
     show_header
@@ -135,7 +135,7 @@ install () {
 update () {
     # download most recent version
     
-    wget -O /tmp/"$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
+    wget -qO /tmp/"$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
         v="$(bash "$TMP_FILE" -v)"
         r="$(bash "$TMP_FILE" -r)"
         tmpFileV="${v//[^0-9]/}"
