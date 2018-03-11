@@ -135,7 +135,7 @@ install () {
 update () {
     # download most recent version
     
-    wget -qO /tmp/"$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
+    wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
         v="$(bash "$TMP_FILE" -v)"
         r="$(bash "$TMP_FILE" -r)"
         tmpFileV="${v//[^0-9]/}"
