@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="4"
+REVISION="5"
 DATE="10 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -15,6 +15,11 @@ main() {
     echo "UpdateRobuntu v$VERSION.$REVISION of $DATE, by $AUTHOR."
     echo
     
+    install
+    update
+    
+    CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
+    
     if [ "$ARG1" = "-set-level" ]; then
         if [ "$ARG2" != "" ]; then
             echo "Setting Update Level to $ARG2"
@@ -26,15 +31,14 @@ main() {
         exit 0
     fi
     
-    install
-    update
-    
-    if [ ! -f $LEVEL_FILE ]; then 
-        echo "UpdateRobuntu was not installed properly. Missing $LEVEL_FILE!"
+    if [ "$ARG1" = "-level" ]; then
+        echo "Current Update Level: $CURRENT_LEVEL"
         exit 0
     fi
     
-    CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
+    [ "$ARG1" = "-help" ] || [ "$ARG1" = "-h" ] && show_help
+
+    
     DO_LEVEL=$((CURRENT_LEVEL + 1))
     
     case "$DO_LEVEL" in
@@ -77,15 +81,25 @@ do_update () {
     echo $CURRENT_LEVEL > $LEVEL_FILE   
 }
 
+show_help() {
+    echo "Usage: update-robuntu [-options] [args]"
+    echo "options:"
+    echo "    -help, -h           Help screen"
+    echo "    -level              Check robuntu's current update level"
+    echo "    -set-level [num]    Set the update level"
+    echo
+    exit 0
+}
+
 install () {
     FILE_PATH="/usr/local/bin/"
+    
+    [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME"
         sudo echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
-        [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
-        
         echo "Running locally"
-        bash $FILE_PATH$SCRIPT_NAME
+        bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
         exit 0
     fi   
 }
@@ -113,7 +127,7 @@ update () {
             rm -f "$TMP_FILE"
             
             #echo "Running updated version..."
-            bash $0
+            bash $0 $ARG1 $ARG2
             exit 0
         else
             #echo "Current version up to date."
