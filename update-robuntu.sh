@@ -27,13 +27,11 @@ main() {
         "-help")      show_help    ;;
     esac
     
-    show_header
-    
     install
     update
     
-    [ "$ARG1" = "-help" ] || [ "$ARG1" = "-h" ] && show_help
-
+    show_header
+    
     DO_LEVEL=$((CURRENT_LEVEL + 1))
     
     case "$DO_LEVEL" in
@@ -147,7 +145,7 @@ update () {
         
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
-            echo "Updating to latest version."
+            echo "Updating to latest version (v$VERSION.$REVISION to v$tmpFileV.$tmpFileR)."
             cp "$TMP_FILE" "$0"
             rm -f "$TMP_FILE"
             
