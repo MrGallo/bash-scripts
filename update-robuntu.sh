@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="5"
+REVISION="6"
 DATE="11 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -29,8 +29,7 @@ main() {
     
     show_header
     
-    #TODO enable 
-    #install
+    install
     update
     
     [ "$ARG1" = "-help" ] || [ "$ARG1" = "-h" ] && show_help
@@ -152,11 +151,7 @@ update () {
             cp "$TMP_FILE" "$0"
             rm -f "$TMP_FILE"
             
-            # TODO disable
-            echo "Running updated version..."
-            exit 0
-            #---
-            
+            # echo "Running updated version..."
             bash $0 $ARG1 $ARG2
             exit 0
         else
