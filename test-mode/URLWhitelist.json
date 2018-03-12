@@ -1,0 +1,11 @@
+{
+    "URLWhitelist": [
+        "github.com/MrGallo/cheatsheets",
+        "github.com/mrgallo/cheatsheets",
+        "classroom.google.com",
+        "chrome://*",
+        "oracle.com",
+        "python.org",
+        "processing.org"
+    ]
+}
