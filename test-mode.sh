@@ -1,9 +1,9 @@
 #!/bin/bash
 
-SCRIPT_NAME="$0"
+SCRIPT_NAME=`basename "$0"`
 ARGS="$@"
-NEW_FILE="/tmp/$0"
-VERSION="0.2.9"
+NEW_FILE="/tmp/$SCRIPT_NAME"
+VERSION="0.3.0"
 DATE="March 9 2018"
 AUTHOR="Mr. Gallo"
 
@@ -11,8 +11,8 @@ AUTHOR="Mr. Gallo"
 update () {
   
     # download most recent version
-    rm -f "$NEW_FILE"
-    wget -qP /tmp "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$0" && {
+    
+    wget -qO "$NEW_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
         NF_V=$(head -6 $NEW_FILE | tail -1)
         NF_V="${NF_V//[^0-9]/}"
         NF_V=$((10#$NF_V))
@@ -24,11 +24,11 @@ update () {
         if (( NF_V > INT_VERSION )); then 
             #echo "Newer version found."
             echo "Updating to latest version."
-            cp "$NEW_FILE" "$SCRIPT_NAME"
+            cp "$NEW_FILE" "$0"
             rm -f "$NEW_FILE"
             
             #echo "Running updated version..."
-            bash $SCRIPT_NAME $ARGS
+            bash $0 $ARGS
             
             exit 0
         else
