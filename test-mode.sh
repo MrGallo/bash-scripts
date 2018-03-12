@@ -51,7 +51,7 @@ showHelp() {
 doStart() {
     clear 
     
-    git add -A
+    sudo git add -A
     git commit -m "Pre-test save"
 
     #    change taskbar alpha
