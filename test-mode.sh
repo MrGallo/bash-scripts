@@ -3,7 +3,7 @@
 SCRIPT_NAME=`basename "$0"`
 ARGS="$@"
 NEW_FILE="/tmp/$SCRIPT_NAME"
-VERSION="0.3.0"
+VERSION="1.0.0"
 DATE="March 9 2018"
 AUTHOR="Mr. Gallo"
 
