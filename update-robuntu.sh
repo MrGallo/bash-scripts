@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="7"
+REVISION="8"
 DATE="11 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -25,6 +25,9 @@ main() {
                 
         "-h")         ;&
         "-help")      show_help    ;;
+        
+        "-s")         ;&
+        "-specific")  update_specific ;;
     esac
     
     install
@@ -32,8 +35,13 @@ main() {
     
     show_header
     
-    DO_LEVEL=$((CURRENT_LEVEL + 1))
-    
+    # is there a specific update request?
+    if [ ! -z ${SPECIFIC_DO+x} ]; then
+        DO_LEVEL="$SPECIFIC_DO"
+    else
+        DO_LEVEL=$((CURRENT_LEVEL + 1))
+    fi
+
     case "$DO_LEVEL" in
         # cascade with ;&
 
@@ -42,7 +50,6 @@ main() {
         *) echo "No updates." && exit 0
     esac
 }
-
 
 fixBottomPanel_20180309() {
     echo "Applying bottom panel lock and position adjustment"
@@ -67,6 +74,16 @@ installTestModeScript_20180309() {
     git config --local user.email "robuntu@stro.ycdsb.ca"
     git commit -m "Initial commit"
     echo "... Done!"
+}
+
+update_specific() {
+    if [ "$ARG2" != "" ]; then
+        SPECIFIC_DO="$ARG2"
+    else
+        echo "Error: Need to specify an update number."
+        echo "E.g., update-robuntu -specific 3"
+        exit 0
+    fi
 }
 
 set_level() {
@@ -103,6 +120,10 @@ show_header() {
 do_update () {
     $1  # run update
 
+    # was this a specific update request?
+    # if so, exit early without updating level file
+    [ ! -z ${SPECIFIC_DO+x} ] && exit 0
+    
     # update level file
     CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
     echo $CURRENT_LEVEL > $LEVEL_FILE   
@@ -113,9 +134,10 @@ show_help() {
     
     echo "Usage: update-robuntu [-options] [args]"
     echo "options:"
-    echo "    -help, -h           Help screen"
-    echo "    -level              Check robuntu's current update level"
-    echo "    -set-level [num]    Set the update level"
+    echo "    -help, -h             Help screen"
+    echo "    -level                Check robuntu's current update level"
+    echo "    -set-level [num]      Set the update level"
+    echo "    -specific, -s [num]   Run a single, specific update"
     echo
     exit 0
 }
