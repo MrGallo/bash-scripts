@@ -170,7 +170,7 @@ update () {
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
             echo "Updating to latest version (v$VERSION.$REVISION to v$tmpFileV.$tmpFileR)."
-            cp "$TMP_FILE" "$FILE_PATH$SCRIPT_NAME"
+            sudo cp "$TMP_FILE" "$FILE_PATH$SCRIPT_NAME"
             rm -f "$TMP_FILE"
             
             # echo "Running updated version..."
@@ -183,6 +183,5 @@ update () {
     }
 }
 
-echo "$0"
-exit 0
-# main
+
+main
