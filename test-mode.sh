@@ -3,7 +3,7 @@
 SCRIPT_NAME="$0"
 ARGS="$@"
 NEW_FILE="/tmp/$0"
-VERSION="0.2.8"
+VERSION="0.2.9"
 DATE="March 9 2018"
 AUTHOR="Mr. Gallo"
 
@@ -59,6 +59,10 @@ doStart() {
     # turn off background image
     xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 0
     
+    # Enable Internet blocking
+    sudo wget -qO /etc/chromium-browser/policies/managed/URLBlacklist.json "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode/URLBlacklist.json"
+    sudo wget -qO /etc/chromium-browser/policies/managed/URLWhitelist.json "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode/URLWhitelist.json"
+    
     echo "  ____  _             _           _ 
  / ___|| |_ __ _ _ __| |_ ___  __| |
  \___ \| __/ _\` | '__| __/ _ \/ _\` |
@@ -77,6 +81,10 @@ doStop() {
     xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 100
     # turn off background image
     xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 5
+    
+    # Disable Internet blocking
+    sudo rm -f /etc/chromium-browser/policies/managed/URLBlacklist.json
+    sudo rm -f /etc/chromium-browser/policies/managed/URLWhitelist.json
 
     clear
     echo "
