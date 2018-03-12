@@ -24,11 +24,11 @@ update () {
         if (( NF_V > INT_VERSION )); then 
             #echo "Newer version found."
             echo "Updating to latest version."
-            cp "$NEW_FILE" "$0"
+            sudo cp "$NEW_FILE" "/usr/local/bin/$SCRIPT_NAME"
             rm -f "$NEW_FILE"
             
             #echo "Running updated version..."
-            bash $0 $ARGS
+            bash "/usr/local/bin/$SCRIPT_NAME" $ARGS
             
             exit 0
         else
