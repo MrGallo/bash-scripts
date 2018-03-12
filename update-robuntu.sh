@@ -46,7 +46,10 @@ main() {
 
 fixBottomPanel_20180309() {
     echo "Applying bottom panel lock and position adjustment"
-    wget -q "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml" -O ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml"
+    
+    echo "Setting desktop properties"
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-desktop.xml"
 }
 
 installTestModeScript_20180309() {
