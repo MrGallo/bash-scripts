@@ -2,10 +2,11 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="8"
+REVISION="9"
 DATE="11 March 2018"
 AUTHOR="Mr. Gallo"
 
+FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
 LEVEL_FILE=~/.robuntu_update_level
 CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
@@ -143,8 +144,6 @@ show_help() {
 }
 
 install () {
-    FILE_PATH="/usr/local/bin/"
-    
     [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME"
@@ -171,11 +170,11 @@ update () {
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
             echo "Updating to latest version (v$VERSION.$REVISION to v$tmpFileV.$tmpFileR)."
-            cp "$TMP_FILE" "$0"
+            cp "$TMP_FILE" "$FILE_PATH$SCRIPT_NAME"
             rm -f "$TMP_FILE"
             
             # echo "Running updated version..."
-            bash $0 $ARG1 $ARG2
+            bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
             exit 0
         else
             #echo "Current version up to date."
@@ -184,4 +183,6 @@ update () {
     }
 }
 
-main
+echo "$0"
+exit 0
+# main
