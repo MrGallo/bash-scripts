@@ -74,7 +74,7 @@ update () {
         
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
-            echo "Updating to latest version (v$VERSION.$REVISION to v$tmpFileV.$tmpFileR)."
+            echo "Updating to latest version (v${VERSION}r${REVISION} to v${tmpFileV}r${tmpFileR})."
             sudo cp "$TMP_FILE" "$FILE_PATH$SCRIPT_NAME"
             rm -f "$TMP_FILE"
             
