@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="11"
+REVISION="12"
 DATE="12 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -14,9 +14,9 @@ ARG1="$1"
 ARG2="$2"
 
 main() {
-    install
-    update
     check_for_options
+    install
+    #update
     show_header
     set_DO_LEVEL
     do_updates
@@ -63,6 +63,7 @@ update () {
     wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
         v="$(bash "$TMP_FILE" -v)"
         r="$(bash "$TMP_FILE" -r)"
+        
         tmpFileV="${v//[^0-9]/}"
         tmpFileR="${r//[^0-9]/}"
         
@@ -221,13 +222,13 @@ get_level() {
 
 
 get_version() {
-    echo "UpdateRobuntu v$VERSION"
+    echo "$VERSION"
     exit 0
 }
 
 
 get_revision() {
-    echo "UpdateRobuntu r$REVISION"
+    echo "$REVISION"
     exit 0
 }
 
