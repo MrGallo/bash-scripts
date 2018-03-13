@@ -110,8 +110,9 @@ do_updates() {
     case "$DO_LEVEL" in
         # cascade with ;&
 
-        1) do_update installTestModeScript_20180309  ;&           
-        2) do_update fixBottomPanel_20180309         ;;
+        1) do_update installTestModeScript_20180309   ;&
+        2) do_update configureTestModeScript_20180309 ;&
+        3) do_update fixBottomPanel_20180309          ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -142,15 +143,9 @@ fixBottomPanel_20180309() {
 }
 
 
-installTestModeScript_20180309() {
+configureTestModeScript_20180309() {
     
-    show_update_details "Install and configure test-mode script." && return
-
-    echo "Installing test-mode script into /usr/local/bin."
-    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
-    
-    echo "Adding system alias 'test-mode'."
-    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
+    show_update_details "Configure test-mode script." && return
     
     echo "Initializing git repository in home directory."
     echo "Could take a while..."
@@ -160,6 +155,18 @@ installTestModeScript_20180309() {
     git config --local user.email "robuntu@stro.ycdsb.ca"
     git commit -m "Initial commit"
     echo "... Done!"
+}
+
+
+installTestModeScript_20180309() {
+    
+    show_update_details "Install test-mode script." && return
+
+    echo "Installing test-mode script into /usr/local/bin."
+    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
+    
+    echo "Adding system alias 'test-mode'."
+    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
 }
 
 
