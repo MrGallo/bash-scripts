@@ -14,9 +14,9 @@ ARG1="$1"
 ARG2="$2"
 
 main() {
-    check_for_options
     install
     update
+    check_for_options
     show_header
     set_DO_LEVEL
     do_updates
