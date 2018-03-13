@@ -2,8 +2,8 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="9"
-DATE="11 March 2018"
+REVISION="10"
+DATE="12 March 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -29,16 +29,20 @@ main() {
         
         "-s")         ;&
         "-specific")  update_specific ;;
+        
+        "-l")         ;&
+        "-list")      LIST=1          ;;
     esac
     
     install
     update
-    
     show_header
     
-    # is there a specific update request?
-    if [ ! -z ${SPECIFIC_DO+x} ]; then
+    if in_specific_mode; then
         DO_LEVEL="$SPECIFIC_DO"
+    elif in_list_mode; then
+        echo "List of updates:"
+        DO_LEVEL=1
     else
         DO_LEVEL=$((CURRENT_LEVEL + 1))
     fi
@@ -52,15 +56,32 @@ main() {
     esac
 }
 
+show_update_details() {
+    # if '-list' option was passed, show only descriptions, don't allow update to run.
+    # the 'true' command forces a premature return of update function skipping the update scripts.
+    if in_list_mode; then
+        echo -n "$LIST. " 
+        echo $1
+        LIST=$((LIST+1))
+        true
+    else
+        echo $1
+        false
+    fi
+}
+
 fixBottomPanel_20180309() {
-    echo "Applying bottom panel lock and position adjustment"
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml"
     
-    echo "Setting desktop properties"
+    show_update_details "Set bottom panel lock and adjust position. Set desktop background properties." && return
+    
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml"
     wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-desktop.xml"
 }
 
 installTestModeScript_20180309() {
+    
+    show_update_details "Install and configure test-mode script." && return
+
     echo "Installing test-mode script into /usr/local/bin."
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
     
@@ -78,7 +99,7 @@ installTestModeScript_20180309() {
 }
 
 update_specific() {
-    if [ "$ARG2" != "" ]; then
+    if exists_ARG2; then
         SPECIFIC_DO="$ARG2"
     else
         echo "Error: Need to specify an update number."
@@ -88,9 +109,9 @@ update_specific() {
 }
 
 set_level() {
-    if [ "$ARG2" != "" ]; then
-        echo "Setting Update Level to $ARG2"
+    if exists_ARG2; then
         echo "$ARG2" > "$LEVEL_FILE"
+        echo "Successfully set update level to $ARG2"
     else
         echo "Error: Need to specify a level to set."
         echo "E.g., update-robuntu -set-level 3"
@@ -104,30 +125,57 @@ get_level() {
 }
 
 get_version() {
-    echo "$VERSION"
+    echo "UpdateRobuntu v$VERSION"
     exit 0
 }
 
 get_revision() {
-    echo "$REVISION"
+    echo "UpdateRobuntu r$REVISION"
     exit 0
 }
 
 show_header() {
-    echo "UpdateRobuntu v$VERSION.$REVISION of $DATE, by $AUTHOR."
+    echo "UpdateRobuntu v${VERSION}r${REVISION} of $DATE, by $AUTHOR."
     echo
 }
 
 do_update () {
     $1  # run update
 
-    # was this a specific update request?
+    # in list mode? if so, return without updating level
+    in_list_mode && return
+    
+    # was this a specific update request or listing?
     # if so, exit early without updating level file
-    [ ! -z ${SPECIFIC_DO+x} ] && exit 0
+    in_specific_mode && exit 0
     
     # update level file
     CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
     echo $CURRENT_LEVEL > $LEVEL_FILE   
+}
+
+exists_ARG2() {
+    if [ "$ARG2" != "" ]; then
+        true
+    else
+        false
+    fi
+}
+
+in_specific_mode() {
+    if [ ! -z ${SPECIFIC_DO+x} ]; then
+        true
+    else
+        false
+    fi
+}
+
+in_list_mode() {
+    if [ ! -z ${LIST+x} ]; then
+        true
+    else
+        false
+    fi
 }
 
 show_help() {
@@ -139,6 +187,7 @@ show_help() {
     echo "    -level                Check robuntu's current update level"
     echo "    -set-level [num]      Set the update level"
     echo "    -specific, -s [num]   Run a single, specific update"
+    echo "    -list, -l             Display a list of all available updates"
     echo
     exit 0
 }
@@ -182,6 +231,5 @@ update () {
         fi
     }
 }
-
 
 main
