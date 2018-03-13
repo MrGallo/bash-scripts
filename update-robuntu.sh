@@ -14,6 +14,16 @@ ARG1="$1"
 ARG2="$2"
 
 main() {
+    check_for_options
+    install
+    update
+    show_header
+    set_DO_LEVEL
+    do_updates
+}
+
+
+check_for_options() {
     case "$ARG1" in
         "-set-level") set_level    ;;
         "-level")     get_level    ;;
@@ -33,163 +43,6 @@ main() {
         "-l")         ;&
         "-list")      LIST=1          ;;
     esac
-    
-    install
-    update
-    show_header
-    
-    if in_specific_mode; then
-        DO_LEVEL="$SPECIFIC_DO"
-    elif in_list_mode; then
-        echo "List of updates:"
-        DO_LEVEL=1
-    else
-        DO_LEVEL=$((CURRENT_LEVEL + 1))
-    fi
-
-    case "$DO_LEVEL" in
-        # cascade with ;&
-
-        1) do_update installTestModeScript_20180309  ;&           
-        2) do_update fixBottomPanel_20180309         ;;
-        *) echo "No updates." && exit 0
-    esac
-}
-
-show_update_details() {
-    # if '-list' option was passed, show only descriptions, don't allow update to run.
-    # the 'true' command forces a premature return of update function skipping the update scripts.
-    if in_list_mode; then
-        echo -n "$LIST. " 
-        echo $1
-        LIST=$((LIST+1))
-        true
-    else
-        echo $1
-        false
-    fi
-}
-
-fixBottomPanel_20180309() {
-    
-    show_update_details "Set bottom panel lock and adjust position. Set desktop background properties." && return
-    
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml"
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-desktop.xml"
-}
-
-installTestModeScript_20180309() {
-    
-    show_update_details "Install and configure test-mode script." && return
-
-    echo "Installing test-mode script into /usr/local/bin."
-    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
-    
-    echo "Adding system alias 'test-mode'."
-    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
-    
-    echo "Initializing git repository in home directory."
-    echo "Could take a while..."
-    cd ~
-    git init && git add -A 
-    git config --local user.name "robuntu"
-    git config --local user.email "robuntu@stro.ycdsb.ca"
-    git commit -m "Initial commit"
-    echo "... Done!"
-}
-
-update_specific() {
-    if exists_ARG2; then
-        SPECIFIC_DO="$ARG2"
-    else
-        echo "Error: Need to specify an update number."
-        echo "E.g., update-robuntu -specific 3"
-        exit 0
-    fi
-}
-
-set_level() {
-    if exists_ARG2; then
-        echo "$ARG2" > "$LEVEL_FILE"
-        echo "Successfully set update level to $ARG2"
-    else
-        echo "Error: Need to specify a level to set."
-        echo "E.g., update-robuntu -set-level 3"
-    fi
-    exit 0
-}
-
-get_level() {
-    echo "Current Update Level: $CURRENT_LEVEL"
-    exit 0
-}
-
-get_version() {
-    echo "UpdateRobuntu v$VERSION"
-    exit 0
-}
-
-get_revision() {
-    echo "UpdateRobuntu r$REVISION"
-    exit 0
-}
-
-show_header() {
-    echo "UpdateRobuntu v${VERSION}r${REVISION} of $DATE, by $AUTHOR."
-    echo
-}
-
-do_update () {
-    $1  # run update
-
-    # in list mode? if so, return without updating level
-    in_list_mode && return
-    
-    # was this a specific update request or listing?
-    # if so, exit early without updating level file
-    in_specific_mode && exit 0
-    
-    # update level file
-    CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
-    echo $CURRENT_LEVEL > $LEVEL_FILE   
-}
-
-exists_ARG2() {
-    if [ "$ARG2" != "" ]; then
-        true
-    else
-        false
-    fi
-}
-
-in_specific_mode() {
-    if [ ! -z ${SPECIFIC_DO+x} ]; then
-        true
-    else
-        false
-    fi
-}
-
-in_list_mode() {
-    if [ ! -z ${LIST+x} ]; then
-        true
-    else
-        false
-    fi
-}
-
-show_help() {
-    show_header
-    
-    echo "Usage: update-robuntu [-options] [args]"
-    echo "options:"
-    echo "    -help, -h             Help screen"
-    echo "    -level                Check robuntu's current update level"
-    echo "    -set-level [num]      Set the update level"
-    echo "    -specific, -s [num]   Run a single, specific update"
-    echo "    -list, -l             Display a list of all available updates"
-    echo
-    exit 0
 }
 
 install () {
@@ -202,6 +55,7 @@ install () {
         exit 0
     fi   
 }
+
 
 update () {
     # download most recent version
@@ -231,5 +85,178 @@ update () {
         fi
     }
 }
+
+
+show_header() {
+    echo "UpdateRobuntu v${VERSION}r${REVISION} of $DATE, by $AUTHOR."
+    echo
+}
+
+
+set_DO_LEVEL() {
+    if in_specific_mode; then
+        DO_LEVEL="$SPECIFIC_DO"
+    elif in_list_mode; then
+        echo "List of updates:"
+        DO_LEVEL=1
+    else
+        DO_LEVEL=$((CURRENT_LEVEL + 1))
+    fi
+}
+
+do_updates() {
+    case "$DO_LEVEL" in
+        # cascade with ;&
+
+        1) do_update installTestModeScript_20180309  ;&           
+        2) do_update fixBottomPanel_20180309         ;;
+        *) echo "No updates." && exit 0
+    esac
+}
+
+
+do_update () {
+    $1  # run update
+
+    # in list mode? if so, return without updating level
+    in_list_mode && return
+    
+    # was this a specific update request or listing?
+    # if so, exit early without updating level file
+    in_specific_mode && exit 0
+    
+    # update level file
+    CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
+    echo $CURRENT_LEVEL > $LEVEL_FILE   
+}
+
+
+fixBottomPanel_20180309() {
+    
+    show_update_details "Set bottom panel lock and adjust position. Set desktop background properties." && return
+    
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml"
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-desktop.xml"
+}
+
+
+installTestModeScript_20180309() {
+    
+    show_update_details "Install and configure test-mode script." && return
+
+    echo "Installing test-mode script into /usr/local/bin."
+    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
+    
+    echo "Adding system alias 'test-mode'."
+    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
+    
+    echo "Initializing git repository in home directory."
+    echo "Could take a while..."
+    cd ~
+    git init && git add -A 
+    git config --local user.name "robuntu"
+    git config --local user.email "robuntu@stro.ycdsb.ca"
+    git commit -m "Initial commit"
+    echo "... Done!"
+}
+
+
+show_update_details() {
+    # if '-list' option was passed, show only descriptions, don't allow update to run.
+    # the 'true' command forces a premature return of update function skipping the update scripts.
+    if in_list_mode; then
+        echo -n "$LIST. " 
+        echo $1
+        LIST=$((LIST+1))
+        true
+    else
+        echo $1
+        false
+    fi
+}
+
+
+show_help() {
+    show_header
+    
+    echo "Usage: update-robuntu [-options] [args]"
+    echo "options:"
+    echo "    -help, -h             Help screen"
+    echo "    -level                Check robuntu's current update level"
+    echo "    -set-level [num]      Set the update level"
+    echo "    -specific, -s [num]   Run a single, specific update"
+    echo "    -list, -l             Display a list of all available updates"
+    echo
+    exit 0
+}
+
+
+update_specific() {
+    if exists_ARG2; then
+        SPECIFIC_DO="$ARG2"
+    else
+        echo "Error: Need to specify an update number."
+        echo "E.g., update-robuntu -specific 3"
+        exit 0
+    fi
+}
+
+
+set_level() {
+    if exists_ARG2; then
+        echo "$ARG2" > "$LEVEL_FILE"
+        echo "Successfully set update level to $ARG2"
+    else
+        echo "Error: Need to specify a level to set."
+        echo "E.g., update-robuntu -set-level 3"
+    fi
+    exit 0
+}
+
+
+get_level() {
+    echo "Current Update Level: $CURRENT_LEVEL"
+    exit 0
+}
+
+
+get_version() {
+    echo "UpdateRobuntu v$VERSION"
+    exit 0
+}
+
+
+get_revision() {
+    echo "UpdateRobuntu r$REVISION"
+    exit 0
+}
+
+
+exists_ARG2() {
+    if [ "$ARG2" != "" ]; then
+        true
+    else
+        false
+    fi
+}
+
+
+in_specific_mode() {
+    if [ ! -z ${SPECIFIC_DO+x} ]; then
+        true
+    else
+        false
+    fi
+}
+
+
+in_list_mode() {
+    if [ ! -z ${LIST+x} ]; then
+        true
+    else
+        false
+    fi
+}
+
 
 main
