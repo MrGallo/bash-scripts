@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="12"
+REVISION="13"
 DATE="12 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -14,36 +14,14 @@ ARG1="$1"
 ARG2="$2"
 
 main() {
-    check_for_options
     install
     update
+    check_for_options
     show_header
     set_DO_LEVEL
     do_updates
 }
 
-
-check_for_options() {
-    case "$ARG1" in
-        "-set-level") set_level    ;;
-        "-level")     get_level    ;;
-            
-        "-version")   ;&
-        "-v")         get_version  ;;
-                
-        "-revision")  ;&
-        "-r")         get_revision ;;
-                
-        "-h")         ;&
-        "-help")      show_help    ;;
-        
-        "-s")         ;&
-        "-specific")  update_specific ;;
-        
-        "-l")         ;&
-        "-list")      LIST=1          ;;
-    esac
-}
 
 install () {
     [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
@@ -85,6 +63,28 @@ update () {
             rm -f "$TMP_FILE"
         fi
     }
+}
+
+check_for_options() {
+    case "$ARG1" in
+        "-set-level") set_level    ;;
+        "-level")     get_level    ;;
+            
+        "-version")   ;&
+        "-v")         get_version  ;;
+                
+        "-revision")  ;&
+        "-r")         get_revision ;;
+                
+        "-h")         ;&
+        "-help")      show_help    ;;
+        
+        "-s")         ;&
+        "-specific")  update_specific ;;
+        
+        "-l")         ;&
+        "-list")      LIST=1          ;;
+    esac
 }
 
 
