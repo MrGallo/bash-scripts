@@ -14,12 +14,35 @@ ARG1="$1"
 ARG2="$2"
 
 main() {
+    check_for_options
     install
     update
-    check_for_options
     show_header
     set_DO_LEVEL
     do_updates
+}
+
+
+check_for_options() {
+    case "$ARG1" in
+        "-set-level") set_level    ;;
+        "-level")     get_level    ;;
+            
+        "-version")   ;&
+        "-v")         get_version  ;;
+                
+        "-revision")  ;&
+        "-r")         get_revision ;;
+                
+        "-h")         ;&
+        "-help")      show_help    ;;
+        
+        "-s")         ;&
+        "-specific")  update_specific ;;
+        
+        "-l")         ;&
+        "-list")      LIST=1          ;;
+    esac
 }
 
 
@@ -38,7 +61,7 @@ install () {
 update () {
     # download most recent version
     
-    wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
+    wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME"  && {
         v="$(bash "$TMP_FILE" -v)"
         r="$(bash "$TMP_FILE" -r)"
         
@@ -63,28 +86,6 @@ update () {
             rm -f "$TMP_FILE"
         fi
     }
-}
-
-check_for_options() {
-    case "$ARG1" in
-        "-set-level") set_level    ;;
-        "-level")     get_level    ;;
-            
-        "-version")   ;&
-        "-v")         get_version  ;;
-                
-        "-revision")  ;&
-        "-r")         get_revision ;;
-                
-        "-h")         ;&
-        "-help")      show_help    ;;
-        
-        "-s")         ;&
-        "-specific")  update_specific ;;
-        
-        "-l")         ;&
-        "-list")      LIST=1          ;;
-    esac
 }
 
 
