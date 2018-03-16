@@ -49,7 +49,7 @@ check_for_options() {
 install () {
     [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
-        sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME"
+        sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
         sudo echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
         echo "Running locally"
         bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
@@ -61,7 +61,7 @@ install () {
 update () {
     # download most recent version
     
-    wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME"  && {
+    wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"  && {
         v="$(bash "$TMP_FILE" -v)"
         r="$(bash "$TMP_FILE" -r)"
         
