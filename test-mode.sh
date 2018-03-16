@@ -12,7 +12,7 @@ update () {
   
     # download most recent version
     
-    wget -qO "$NEW_FILE" "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/$SCRIPT_NAME" && {
+    wget -qO "$NEW_FILE" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME" && {
         NF_V=$(head -6 $NEW_FILE | tail -1)
         NF_V="${NF_V//[^0-9]/}"
         NF_V=$((10#$NF_V))
@@ -60,8 +60,8 @@ doStart() {
     xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 0
     
     # Enable Internet blocking
-    sudo wget -qO /etc/chromium-browser/policies/managed/URLBlacklist.json "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode/URLBlacklist.json"
-    sudo wget -qO /etc/chromium-browser/policies/managed/URLWhitelist.json "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode/URLWhitelist.json"
+    sudo wget -qO /etc/chromium-browser/policies/managed/URLBlacklist.json "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode/URLBlacklist.json"
+    sudo wget -qO /etc/chromium-browser/policies/managed/URLWhitelist.json "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode/URLWhitelist.json"
     
     echo "  ____  _             _           _ 
  / ___|| |_ __ _ _ __| |_ ___  __| |
