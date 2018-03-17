@@ -1,8 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="0"
-REVISION="0"
+VERSION="0.0.2"
 DATE="16 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -10,17 +9,184 @@ FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
 ALIAS_FILE='~/.bash_aliases'
 ARG1="$1"
+APPS=(
+    "Play Framework"
+)
 
+APP_INSTALL=( 
+    installPlay 
+)
+
+installPlay() { 
+    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+    sudo apt-get update
+    sudo apt-get install sbt
+    
+    wget -qO ~/scala-plugin.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=44173"
+    find ~ -name '.Intelli*' -exec unzip ~/scala-plugin.zip -d {}/config/plugins/ \;
+    sudo rm -f ~/scala-plugin.zip
+}
+
+APP_ALREADY_INSTALLED=(
+    isInstalledPlay    
+)
+
+isInstalledPlay() { 
+    if [ -d ~/.ivy2 ] && [ -d ~/.sbt ] && [ -d ~/.Intelli*/config/plugins/Scala ]; then
+        true
+    else
+        false
+    fi
+}
+
+main() {
+    checkOptions
+    install
+    update
+    
+}
+
+checkOptions() {
+    case "$ARG1" in
+              "-v") ;&
+        "-version") getVersion ;;
+              "-h") ;&
+           "-help") getHelp    ;;
+              "-l") getList    ;;
+    esac
+}
 
 install() {
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
-        sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
+        sudo wget -qO "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
         sudo echo "alias robuntu-install='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
-        
-        [[ SHUNIT_TRUE ]] && exit 0
-        
-        echo "Running locally"
-        bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
-        exit 0
-    fi   
+
+        if inProduction; then
+            runLocally
+        fi
+    elif ! inProduction; then
+        echo "Already installed"
+    fi
 }
+
+
+update() {
+    sudo wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
+    
+    local tmpVersion=$(bash $TMP_FILE -v)
+    isNewer "$tmpVersion" "$VERSION" && inProduction && {
+        sudo mv $TMP_FILE $FILE_PATH$SCRIPT_NAME
+        runLocally
+    }
+}
+
+isNewer() {
+    tmp=$1 #${1//[^0-9]/}
+    cur=$2 #${2//[^0-9]/}
+    pattern="([0-9]+)\.?"
+    
+    # Expand tmp version
+    count=0
+    while [[ $tmp =~ $pattern ]]; do 
+        tmpExp["$count"]="${BASH_REMATCH[1]}"
+        tmp=${tmp#*"${BASH_REMATCH[1]}"}
+        count=$(( count + 1 ))
+    done
+    
+    # Expand current version
+    count=0
+    while [[ $cur =~ $pattern ]]; do 
+        curExp["$count"]="${BASH_REMATCH[1]}"
+        cur=${cur#*"${BASH_REMATCH[1]}"}
+        count=$(( count + 1 ))
+    done
+
+    # compare both
+    i=0
+    
+    while [[ i -lt 3 ]]; do
+        if [[ tmpExp[$i] -gt curExp[$i] ]]; then
+            true
+            return
+        fi
+        i=$(( i + 1 ))
+    done
+    
+    false
+}
+
+runLocally() {
+    echo "Running locally"
+    bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
+    exit 0
+}
+
+getVersion() {
+    echo $VERSION
+}
+
+getHelp() {
+    showHeader
+    
+    echo "Usage: robuntu-install [option]"
+    echo "options:"
+    echo "    -help, -h             Help screen"
+    echo "    -version, -v          Get application version"
+    echo "    -list, -l             List available software"
+    echo
+    
+    inProduction && exit 0
+}
+
+getList() {
+    showHeader
+    echo "Software Listing:"
+    i=0
+    while [ $i -lt "${#APPS[@]}" ]; do
+        echo "$i. ${APPS[$i]}"
+        i=$(( i + 1 ))
+    done
+    
+}
+
+showHeader() {
+    echo "RobuntuInstall v${VERSION} of $DATE, by $AUTHOR."
+    echo
+}
+    
+doInstall() {
+    if appNotAlreadyInstalled $1; then
+        echo "Installing ${APPS[$1]}"
+        installApp $1
+        echo "Finished installing ${APPS[$1]}"
+    else
+        echo "${APPS[$1]} is already installed."
+    fi
+}
+
+appNotAlreadyInstalled() {
+    if "${APP_ALREADY_INSTALLED[$1]}"; then
+        false;
+    else
+        true;
+    fi
+}
+
+installApp() {
+    "${APP_INSTALL[$1]}"
+}
+
+inProduction() {
+    if [ ! "$SHUNIT_TRUE" ]; then
+        true
+    else
+        false
+    fi
+    
+}
+
+if inProduction; then
+    main
+fi
+
