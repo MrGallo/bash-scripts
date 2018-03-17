@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="0.0.2"
-DATE="16 March 2018"
+VERSION="0.0.3"
+DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -11,6 +11,10 @@ ALIAS_FILE='~/.bash_aliases'
 ARG1="$1"
 APPS=(
     "Play Framework"
+)
+
+APP_DESCRIPTIONS=(
+    "Framework for creating web apps with Java (or Scala).\n\tVisit www.playframework.com for more info."
 )
 
 APP_INSTALL=( 
@@ -53,7 +57,9 @@ checkOptions() {
         "-version") getVersion ;;
               "-h") ;&
            "-help") getHelp    ;;
+           "-list") ;&
               "-l") getList    ;;
+                 *) getHelp    ;;
     esac
 }
 
@@ -74,8 +80,11 @@ install() {
 update() {
     sudo wget -qO "$TMP_FILE" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
     
+    ! inProduction && return
+    
     local tmpVersion=$(bash $TMP_FILE -v)
-    isNewer "$tmpVersion" "$VERSION" && inProduction && {
+
+    isNewer "$tmpVersion" "$VERSION" && {
         sudo mv $TMP_FILE $FILE_PATH$SCRIPT_NAME
         runLocally
     }
@@ -124,6 +133,7 @@ runLocally() {
 
 getVersion() {
     echo $VERSION
+    exit 0
 }
 
 getHelp() {
@@ -136,7 +146,7 @@ getHelp() {
     echo "    -list, -l             List available software"
     echo
     
-    inProduction && exit 0
+    exit 0
 }
 
 getList() {
@@ -144,10 +154,17 @@ getList() {
     echo "Software Listing:"
     i=0
     while [ $i -lt "${#APPS[@]}" ]; do
-        echo "$i. ${APPS[$i]}"
+        echo -n "    $i. ${APPS[$i]}"
+        if ${APP_ALREADY_INSTALLED[$i]}; then
+            echo "    (INSTALLED)"
+        else
+            echo
+        fi
+        printf "\t${APP_DESCRIPTIONS[$i]}\n"
+        echo
         i=$(( i + 1 ))
     done
-    
+    exit 0
 }
 
 showHeader() {

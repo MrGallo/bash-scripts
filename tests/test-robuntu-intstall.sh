@@ -81,6 +81,7 @@ testNewer_15_4_6_newerThan_14_100_345() {
 }
 
 # OPTIONS tests ------------
+
 testCheckOptions_versionOptionShowsVersion() {
     ARG1="-v"
     VERSION="1.0.0"
@@ -107,20 +108,62 @@ testCheckOptions_helpOptionShowsHelp() {
     assertEquals $expected $actual
 }
 
+test_list_displaysListWithOption() {
+    ARG1="-list"
+    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 17)"
+    expected="Software Listing:"
+    assertEquals "$expected" "$actual"
+}
+
 testCheckOptions_listOptionListsAvailable() {
     ARG1="-l"
     APPS=("app1" "app2")
+    APP_DESCRIPTIONS=( "app1 description" "app2 description")
     actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 17)"
     expected="Software Listing:"
     assertEquals "$expected" "$actual"
     
-    actual="$(checkOptions | head -n 4 | tail -n 1)"
-    expected="0. app1"
+    actual="$(checkOptions | head -n 4 | tail -n 1 | head -c 11)"
+    expected="    0. app1"
     assertEquals "$expected" "$actual"
     
-    actual="$(checkOptions | head -n 5 | tail -n 1)"
-    expected="1. app2"
+    actual="$(checkOptions | head -n 5 | tail -c 17)"
+    expected="app1 description"
     assertEquals "$expected" "$actual"
+    
+    actual="$(checkOptions | head -n 7 | tail -n 1 | head -c 11)"
+    expected="    1. app2"
+    assertEquals "$expected" "$actual"
+    
+    actual="$(checkOptions | head -n 8 | tail -c 17)"
+    expected="app2 description"
+    assertEquals "$expected" "$actual"
+}
+
+test_list_displaysINSTALLEDwhenInstalled() {
+    APPS=("app1")
+    APP_ALREADY_INSTALLED=(isInstalledApp1)
+    isInstalledApp1() { true; }
+    
+    actual="$(getList | head -n 4 | tail -n 1 | tail -c 12)"
+    expected="(INSTALLED)"
+    assertEquals "$expected" "$actual"
+}
+
+test_list_doesNotDisplayInstalledWhenNotInstalled() {
+    APPS=("app1")
+    APP_ALREADY_INSTALLED=(isInstalledApp1)
+    isInstalledApp1() { false; }
+    
+    actual="$(getList | head -n 4 | tail -n 1 | tail -c 10)"
+    expected="INSTALLED"
+    assertNotEquals "$expected" "$actual"
+}
+
+testCheckOptions_helpIsShownWhenNoArgsPassed() {
+    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 6)"
+    expected="Usage:"
+    assertEquals $expected $actual
 }
 
 test_doInstallFromArray0() {
@@ -188,9 +231,12 @@ test_isInstalledPlayIsTrueWhenInstalled() {
     
     assertTrue "Play should be installed" isInstalledPlay
     
-    sudo rm -rf ~/.IntelliJwhatever
-    sudo rmdir ~/.sbt
-    sudo rmdir ~/.ivy2
+    rmdir ~/.IntelliJwhatever/config/plugins/Scala
+    rmdir ~/.IntelliJwhatever/config/plugins/
+    rmdir ~/.IntelliJwhatever/config/
+    rmdir ~/.IntelliJwhatever/
+    rmdir ~/.sbt
+    rmdir ~/.ivy2
 }
 
 test_isInstalledPlayIsFalseWhenNotFullyInstalled() {
@@ -199,8 +245,8 @@ test_isInstalledPlayIsFalseWhenNotFullyInstalled() {
     
     assertFalse "Play should not be installed" isInstalledPlay
 
-    sudo rmdir ~/.sbt
-    sudo rmdir ~/.ivy2
+    rmdir ~/.sbt
+    rmdir ~/.ivy2
 }
 
 tearDown() {
@@ -209,6 +255,7 @@ tearDown() {
     APPS="$APPS_BAK"
     APP_INSTALL="$APP_INSTALL_BAK"
     APP_ALREADY_INSTALLED="$APP_ALREADY_INSTALLED_BAK"
+    APP_DESCRIPTIONS="$APP_DESCRIPTIONS_BAK"
     
     rm -f "$FILE_PATH$SCRIPT_NAME"
     rm -f "$ALIAS_FILE"
@@ -222,6 +269,7 @@ oneTimeSetUp() {
     APPS_BAK="$APPS"
     APP_INSTALL_BAK="$APP_INSTALL"
     APP_ALREADY_INSTALLED_BAK="$APP_ALREADY_INSTALLED"
+    APP_DESCRIPTIONS_BAK="$APP_DESCRIPTIONS"
 }
 
 # Load shUnit2.
