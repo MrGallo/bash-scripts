@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="0.0.4"
+VERSION="0.0.5"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
