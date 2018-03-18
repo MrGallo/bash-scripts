@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="16"
+REVISION="17"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -135,6 +135,9 @@ do_update () {
 }
 
 installRobuntuInstall_20180317() {
+    
+    show_update_details "Install robuntu-install script" && return
+
     local FILE_PATH="/usr/local/bin/"
     local SCRIPT_NAME="robuntu-install.sh"
     
