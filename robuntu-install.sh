@@ -193,7 +193,7 @@ doInstall() {
             echo "${APPS[$1]} is already installed."
         fi
     else
-        echo "Error. You must provide a valid argument from 0 to ${#APPS[@]}."
+        echo "Error. You must provide a valid argument from 0 to $(( ${#APPS[@]} - 1 ))."
     fi
 }
 
