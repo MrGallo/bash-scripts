@@ -16,7 +16,7 @@ APPS=(
 )
 
 APP_DESCRIPTIONS=(
-    "Locks certain inernet sites when enables.\n\tReverts linux file state when test mode is ended."
+    "Locks certain inernet sites when enabled.\n\tReverts linux file state when disabled."
     "Framework for creating web apps with Java (or Scala).\n\tVisit www.playframework.com for more info."
 )
 
