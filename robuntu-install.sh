@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="1.0.2"
+VERSION="1.0.3"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -16,7 +16,7 @@ APPS=(
 )
 
 APP_DESCRIPTIONS=(
-    "Locks certain inernet sites when enables.\nReverts linux state when test mode is ended."
+    "Locks certain inernet sites when enables.\n\tReverts linux file state when test mode is ended."
     "Framework for creating web apps with Java (or Scala).\n\tVisit www.playframework.com for more info."
 )
 
