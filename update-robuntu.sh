@@ -154,8 +154,8 @@ fixBottomPanel_20180309() {
     
     show_update_details "Set bottom panel lock and adjust position. Set desktop background properties." && return
     
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-panel.xml"
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/update-files/2/xfce4-desktop.xml"
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/update-files/2/xfce4-panel.xml"
+    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/update-files/2/xfce4-desktop.xml"
 }
 
 
@@ -179,7 +179,7 @@ installTestModeScript_20180309() {
     show_update_details "Install test-mode script." && return
 
     echo "Installing test-mode script into /usr/local/bin."
-    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/bash-scripts/master/test-mode.sh"
+    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
     
     echo "Adding system alias 'test-mode'."
     sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
