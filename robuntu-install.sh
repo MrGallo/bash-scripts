@@ -1,13 +1,13 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="0.0.3"
+VERSION="0.0.4"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
-ALIAS_FILE='~/.bash_aliases'
+ALIAS_FILE=~/.bash_aliases
 ARG1="$1"
 APPS=(
     "Play Framework"
@@ -77,6 +77,7 @@ install() {
         sudo echo "alias robuntu-install='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
 
         if inProduction; then
+            echo "Running locally"
             runLocally
         fi
     elif ! inProduction; then
@@ -93,6 +94,7 @@ update() {
     local tmpVersion=$(bash $TMP_FILE -v)
 
     isNewer "$tmpVersion" "$VERSION" && {
+        echo "Updating from v$VERSION to v$tmpVersion"
         sudo mv $TMP_FILE $FILE_PATH$SCRIPT_NAME
         runLocally
     }
@@ -134,7 +136,6 @@ isNewer() {
 }
 
 runLocally() {
-    echo "Running locally"
     bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
     exit 0
 }
