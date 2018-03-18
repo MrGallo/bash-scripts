@@ -9,6 +9,7 @@ FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
 ALIAS_FILE=~/.bash_aliases
 ARG1="$1"
+ARG2="$2"
 APPS=(
     "TestMode"
     "Play Framework"
@@ -220,7 +221,7 @@ doInstall() {
             echo "${APPS[$1]} is already installed."
         fi
     else
-        echo "Error. You must provide a "
+        echo "Error. You must provide a valid argument from 0 to $(( ${#APPS[@]} - 1 ))."
     fi
 }
 
