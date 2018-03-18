@@ -1,15 +1,30 @@
 #! /bin/sh
 # file: examples/test-robuntu-install.sh
 
-# Test Install --------------------------------
 setUp() {
     SCRIPT_NAME='robuntu-install.sh'
     FILE_PATH=~/
     ALIAS_FILE=~/aliases.test
     TMP_FILE=/tmp/"$SCRIPT_NAME"
+    ARG1=""
+    
+    APPS=("app1" "app2")
+    APP_DESCRIPTIONS=( "app1 description" "app2 description")
+    APP_INSTALL=(install0 install1)
+    install0() { echo "installed"; }
+    install1() { echo "install1"; }
+    APP_ALREADY_INSTALLED=( isInstalledApp1 isInstalledApp2 )
+    isInstalledApp1() { false; }
+    isInstalledApp2() { false; }
+
+
 }
 
-testInstall_shouldNotHappenWhenFileExists() {
+
+
+# Test Install --------------------------------
+
+test_install_shouldNotHappenWhenFileExists() {
     install
 
     assertTrue "should have downloaded" "[ -r $FILE_PATH$SCRIPT_NAME ]"
@@ -17,20 +32,22 @@ testInstall_shouldNotHappenWhenFileExists() {
     assertEquals "alias robuntu-install='bash $SCRIPT_NAME'" "$actual"
 }
 
-testInstall_shouldNotRunLocallyInTestMode() {
+test_install_shouldNotRunLocallyInTestMode() {
     actual=$(install)
     assertNotEquals "should not run locally in test mode" "Running locally" "$actual"
 }
 
-testInstall_shouldNotDownloadIfAlreadyInstalled() {
+test_install_shouldNotDownloadIfAlreadyInstalled() {
     touch "$FILE_PATH$SCRIPT_NAME"
     actual=$(install)
     assertEquals "Should not download if already installed" "Already installed" "$actual"
 }
 
+
+
 # Test getVersion -----------------
 
-testGetVersion_works() {
+test_getVersion_works() {
     VERSION='1.0.1'
     actual=$(getVersion)
     expected='1.0.1'
@@ -38,54 +55,58 @@ testGetVersion_works() {
 }
 
 
+
 # Test Update --------------------------------
-testUpdate_downloadsTMP_FILE() {
+test_update_downloadsTMP_FILE() {
     update
     assertTrue "should have downloaded temp file: $TMP_FILE" "[ -r $TMP_FILE ]"
 }
 
-testUpdate_doesNotReplaceOnEqualVersion() {
+test_update_doesNotReplaceOnEqualVersion() {
     VERSION='1.0.0'
     
 }
 
+
+
 # Test newer ------------------
-testNewer_0_0_1_newerThan_0_0_0() {
-    isNewer "0.0.1" "0.0.0"
-    status=$?
-    assertTrue "0.0.1 should be newer than 0.0.0" $status
+
+test_isNewer_0_0_1_newerThan_0_0_0() {
+    assertNewer "0.0.1" "0.0.0"
 }
 
-testNewer_0_0_1_notNewerThan_0_0_1() {
-    isNewer "0.0.1" "0.0.1"
-    status=$?
-    assertFalse "0.0.1 should not be newer than 0.0.1" $status
+test_isNewer_0_0_1_notNewerThan_0_0_1() {
+    assertNotNewer "0.0.1" "0.0.1"
 }
 
-testNewer_0_0_1_notNewerThan_0_0_2() {
-    isNewer "0.0.1" "0.0.2"
-    status=$?
-    assertFalse "0.0.1 should not be newer than 0.0.2" $status
+test_isNewer_0_0_1_notNewerThan_0_0_2() {
+    assertNotNewer "0.0.1" "0.0.2"
 }
 
-testNewer_0_1_0_newerThan_0_0_25() {
-    isNewer "0.1.0" "0.0.25"
-    status=$?
-    assertTrue "0.1.0 should be newer than 0.0.25" $status
+test_isNewer_0_1_0_newerThan_0_0_25() {
+    assertNewer "0.1.0" "0.0.25"
 }
 
-testNewer_15_4_6_newerThan_14_100_345() {
-    isNewer "15.4.6" "14.100.345"
-    status=$?
-    assertTrue "15.4.6 should be newer than 14.100.345" $status
+test_isNewer_15_4_6_newerThan_14_100_345() {
+    assertNewer "15.4.6" "14.100.345"
 }
 
-# OPTIONS tests ------------
+assertNewer() {
+    isNewer "$1" "$2"
+    status=$?
+    assertTrue "$1 should be newer than $2" $status
+}
+
+assertNotNewer() {
+    isNewer "$1" "$2"
+    status=$?
+    assertFalse "$1 should not be newer than $2" $status
+}
+
+
+
+# Test checkOptions  ------------
 test_checkOptions_installAppShouldHaveErrorWithoutSecondArg() {
-    APPS=("app1")
-    APP_ALREADY_INSTALLED=(isInstalledApp1)
-    isInstalledApp1() { false; }
-    
     ARG1="-a"
     actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 5)"
     expected="Error"
@@ -100,19 +121,13 @@ test_checkOptions_installAppShouldHaveErrorWithoutSecondArg() {
 test_checkOptions_installAppShouldInstall() {
     ARG1="-a"
     ARG2="0"
-    APPS=("app1")
-    APP_INSTALL=(install0)
-    install0() { echo "installed"; }
-    
-    APP_ALREADY_INSTALLED=(isInstalledApp1)
-    isInstalledApp1() { false; }
     
     actual="$(checkOptions "$ARG1" "$ARG2" | head -n 1)"
     expected="Installing app1"
     assertEquals "$expected" "$actual"
 }
 
-testCheckOptions_versionOptionShowsVersion() {
+test_checkOptions_versionOptionShowsVersion() {
     ARG1="-v"
     VERSION="1.0.0"
     actual=$(checkPreOptions)
@@ -126,7 +141,7 @@ testCheckOptions_versionOptionShowsVersion() {
     assertEquals $expected $actual
 }
 
-testCheckOptions_helpOptionShowsHelp() {
+test_checkOptions_helpOptionShowsHelp() {
     ARG1="-h"
     actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 6)"
     expected="Usage:"
@@ -138,17 +153,9 @@ testCheckOptions_helpOptionShowsHelp() {
     assertEquals $expected $actual
 }
 
-test_list_displaysListWithOption() {
-    ARG1="-list"
-    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 17)"
-    expected="Software Listing:"
-    assertEquals "$expected" "$actual"
-}
-
-testCheckOptions_listOptionListsAvailable() {
+test_checkOptions_listOptionListsAvailable() {
     ARG1="-l"
-    APPS=("app1" "app2")
-    APP_DESCRIPTIONS=( "app1 description" "app2 description")
+    
     actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 17)"
     expected="Software Listing:"
     assertEquals "$expected" "$actual"
@@ -170,9 +177,23 @@ testCheckOptions_listOptionListsAvailable() {
     assertEquals "$expected" "$actual"
 }
 
-test_list_displaysINSTALLEDwhenInstalled() {
-    APPS=("app1")
-    APP_ALREADY_INSTALLED=(isInstalledApp1)
+test_CheckOptions_listDisplays() {
+    ARG1="-list"
+    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 17)"
+    expected="Software Listing:"
+    assertEquals "$expected" "$actual"
+}
+
+testCheckOptions_helpIsShownWhenNoArgsPassed() {
+    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 6)"
+    expected="Usage:"
+    assertEquals $expected $actual
+}
+
+
+
+# Test getList -------------------------------------------
+test_getList_displaysINSTALLEDwhenInstalled() {
     isInstalledApp1() { true; }
     
     actual="$(getList | head -n 4 | tail -n 1 | tail -c 12)"
@@ -180,31 +201,17 @@ test_list_displaysINSTALLEDwhenInstalled() {
     assertEquals "$expected" "$actual"
 }
 
-test_list_doesNotDisplayInstalledWhenNotInstalled() {
-    APPS=("app1")
-    APP_ALREADY_INSTALLED=(isInstalledApp1)
-    isInstalledApp1() { false; }
-    
-    actual="$(getList | head -n 4 | tail -n 1 | tail -c 10)"
-    expected="INSTALLED"
+test_getList_doesNotDisplayInstalledWhenNotInstalled() {
+    actual="$(getList | head -n 4 | tail -n 1 | tail -c 12)"
+    expected="(INSTALLED)"
     assertNotEquals "$expected" "$actual"
 }
 
-testCheckOptions_helpIsShownWhenNoArgsPassed() {
-    
-    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 6)"
-    expected="Usage:"
-    assertEquals $expected $actual
-}
+
+
+# Test doInstall ------------------------------------
 
 test_doInstallFromArray0() {
-    APPS=("app1")
-    APP_INSTALL=(install0)
-    install0() { echo "installed"; }
-    
-    APP_ALREADY_INSTALLED=(isInstalledApp1)
-    isInstalledApp1() { false; }
-    
     actual="$(doInstall 0 | head -n 1)"
     expected="Installing app1"
     assertEquals "$expected" "$actual"
@@ -218,25 +225,7 @@ test_doInstallFromArray0() {
     assertEquals "$expected" "$actual"
 }
 
-test_doInstallShouldNotInstallIfAppAlreadyInstalled() {
-    APPS=("app1")
-    
-    APP_ALREADY_INSTALLED=(isInstalledApp1)
-    isInstalledApp1() { true; }
-    
-    actual="$(doInstall 0)"
-    expected="app1 is already installed."
-    assertEquals "$expected" "$actual"
-}
-
 test_doInstall_fromArray1() {
-    APPS=("app1" "app2")
-    
-    APP_INSTALL=(install0, install1)
-    install1() { echo "install1"; }
-    
-    APP_ALREADY_INSTALLED=(isInstalledApp1, isInstalledApp2)
-    isInstalledApp2() { false; }
     
     actual="$(doInstall 1 | head -n 1)"
     expected="Installing app2"
@@ -251,6 +240,18 @@ test_doInstall_fromArray1() {
     assertEquals "$expected" "$actual" 
 
 }
+
+test_doInstallShouldNotInstallIfAppAlreadyInstalled() {
+    isInstalledApp1() { true; }
+    
+    actual="$(doInstall 0)"
+    expected="app1 is already installed."
+    assertEquals "$expected" "$actual"
+}
+
+
+
+# Test app functions ---------------------------
 
 test_isInstalledPlayIsTrueWhenInstalled() {
     mkdir ~/.IntelliJwhatever
@@ -280,14 +281,11 @@ test_isInstalledPlayIsFalseWhenNotFullyInstalled() {
     rmdir ~/.ivy2
 }
 
+
+
+# -------------------------------------------
+
 tearDown() {
-    ARG1=""
-    VERSION="$VERSION_BAK"
-    APPS="$APPS_BAK"
-    APP_INSTALL="$APP_INSTALL_BAK"
-    APP_ALREADY_INSTALLED="$APP_ALREADY_INSTALLED_BAK"
-    APP_DESCRIPTIONS="$APP_DESCRIPTIONS_BAK"
-    
     rm -f "$FILE_PATH$SCRIPT_NAME"
     rm -f "$ALIAS_FILE"
     sudo rm -f "$TMP_FILE"
@@ -296,11 +294,6 @@ tearDown() {
 oneTimeSetUp() {
     # Load include to test.
     . ../robuntu-install.sh
-    VERSION_BAK="$VERSION"
-    APPS_BAK="$APPS"
-    APP_INSTALL_BAK="$APP_INSTALL"
-    APP_ALREADY_INSTALLED_BAK="$APP_ALREADY_INSTALLED"
-    APP_DESCRIPTIONS_BAK="$APP_DESCRIPTIONS"
 }
 
 # Load shUnit2.
