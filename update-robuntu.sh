@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="15"
+REVISION="16"
 DATE="12 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -112,7 +112,8 @@ do_updates() {
 
         1) do_update installTestModeScript_20180309   ;&
         2) do_update configureTestModeScript_20180309 ;&
-        3) do_update fixBottomPanel_20180309          ;;
+        3) do_update fixBottomPanel_20180309          ;&
+        4) do_update installRobuntuInstall_20180317   ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -131,6 +132,18 @@ do_update () {
     # update level file
     CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
     echo $CURRENT_LEVEL > $LEVEL_FILE   
+}
+
+installRobuntuInstall_20180317() {
+    local FILE_PATH="/usr/local/bin/"
+    local SCRIPT_NAME="robuntu-install.sh"
+    
+    if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
+        sudo wget -qO "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
+        sudo echo "alias robuntu-install='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
+    else
+        echo "RobuntuInstall already installed"
+    fi
 }
 
 
