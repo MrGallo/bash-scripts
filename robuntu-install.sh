@@ -9,6 +9,7 @@ FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
 ALIAS_FILE=~/.bash_aliases
 ARG1="$1"
+ARG2="$2"
 APPS=(
     "Play Framework"
 )
