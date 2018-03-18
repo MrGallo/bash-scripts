@@ -45,21 +45,29 @@ isInstalledPlay() {
 }
 
 main() {
-    checkOptions
+    checkPreOptions
     install
     update
-    
+    checkOptions
+}
+
+checkPreOptions() {
+    case "$ARG1" in
+              "-v") ;&
+        "-version") getVersion        ;;
+    esac
 }
 
 checkOptions() {
     case "$ARG1" in
-              "-v") ;&
-        "-version") getVersion ;;
               "-h") ;&
-           "-help") getHelp    ;;
+           "-help") getHelp           ;;
            "-list") ;&
-              "-l") getList    ;;
-                 *) getHelp    ;;
+              "-l") getList           ;;
+            "-app") ;&
+              "-a") doInstall "$ARG2" ;;
+                 *) getHelp           ;;
+        # TODO make -a option to install apps.
     esac
 }
 
@@ -139,11 +147,12 @@ getVersion() {
 getHelp() {
     showHeader
     
-    echo "Usage: robuntu-install [option]"
+    echo "Usage: robuntu-install [option] [arg]"
     echo "options:"
     echo "    -help, -h             Help screen"
     echo "    -version, -v          Get application version"
     echo "    -list, -l             List available software"
+    echo "    -app, -a [n]          Install app number n"
     echo
     
     exit 0
@@ -173,12 +182,24 @@ showHeader() {
 }
     
 doInstall() {
-    if appNotAlreadyInstalled $1; then
-        echo "Installing ${APPS[$1]}"
-        installApp $1
-        echo "Finished installing ${APPS[$1]}"
+    if ifExistsAndIsValid $1; then
+        if appNotAlreadyInstalled $1; then
+            echo "Installing ${APPS[$1]}"
+            installApp $1
+            echo "Finished installing ${APPS[$1]}"
+        else
+            echo "${APPS[$1]} is already installed."
+        fi
     else
-        echo "${APPS[$1]} is already installed."
+        echo "Error. You must provide a "
+    fi
+}
+
+ifExistsAndIsValid() {
+    if [ "$1" != "" ] && [ "$1" -lt "${#APPS[@]}" ]; then
+        true
+    else
+        false
     fi
 }
 

@@ -81,17 +81,47 @@ testNewer_15_4_6_newerThan_14_100_345() {
 }
 
 # OPTIONS tests ------------
+test_checkOptions_installAppShouldHaveErrorWithoutSecondArg() {
+    APPS=("app1")
+    APP_ALREADY_INSTALLED=(isInstalledApp1)
+    isInstalledApp1() { false; }
+    
+    ARG1="-a"
+    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 5)"
+    expected="Error"
+    assertEquals "$expected" "$actual"
+    
+    ARG1="-app"
+    actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 5)"
+    expected="Error"
+    assertEquals "$expected" "$actual"
+}
+
+test_checkOptions_installAppShouldInstall() {
+    ARG1="-a"
+    ARG2="0"
+    APPS=("app1")
+    APP_INSTALL=(install0)
+    install0() { echo "installed"; }
+    
+    APP_ALREADY_INSTALLED=(isInstalledApp1)
+    isInstalledApp1() { false; }
+    
+    actual="$(checkOptions "$ARG1" "$ARG2" | head -n 1)"
+    expected="Installing app1"
+    assertEquals "$expected" "$actual"
+}
 
 testCheckOptions_versionOptionShowsVersion() {
     ARG1="-v"
     VERSION="1.0.0"
-    actual=$(checkOptions)
+    actual=$(checkPreOptions)
     expected='1.0.0'
     assertEquals $expected $actual
     
     ARG1="-version"
     VERSION="1.2.3"
-    actual=$(checkOptions)
+    actual=$(checkPreOptions)
     expected='1.2.3'
     assertEquals $expected $actual
 }
@@ -161,6 +191,7 @@ test_list_doesNotDisplayInstalledWhenNotInstalled() {
 }
 
 testCheckOptions_helpIsShownWhenNoArgsPassed() {
+    
     actual="$(checkOptions | head -n 3 | tail -n 1 | head -c 6)"
     expected="Usage:"
     assertEquals $expected $actual
