@@ -41,7 +41,7 @@ check_for_options() {
         "-specific")  update_specific ;;
         
         "-l")         ;&
-        "-list")      LIST=1          ;;
+        "-list")      get_list        ;;
     esac
 }
 
@@ -236,6 +236,11 @@ set_level() {
     exit 0
 }
 
+get_list() {
+    LIST=1
+    echo
+    get_level
+}
 
 get_level() {
     echo "Current Update Level: $CURRENT_LEVEL"
