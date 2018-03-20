@@ -90,7 +90,7 @@ update () {
 
 
 show_header() {
-    echo "UpdateRobuntu v${VERSION}r${REVISION} of $DATE, by $AUTHOR."
+    echo "RobuntuUpdate v${VERSION}r${REVISION} of $DATE, by $AUTHOR."
     echo
 }
 
