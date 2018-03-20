@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="18"
+REVISION="19"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -238,8 +238,6 @@ set_level() {
 
 get_list() {
     LIST=1
-    echo
-    get_level
 }
 
 get_level() {
