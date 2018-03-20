@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="17"
+REVISION="18"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -50,7 +50,7 @@ install () {
     [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        sudo echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
+        sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" >> ~/.bash_aliases
         echo "Running locally"
         bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
         exit 0
@@ -138,12 +138,10 @@ installRobuntuInstall_20180317() {
     
     show_update_details "Install robuntu-install script" && return
 
-    local FILE_PATH="/usr/local/bin/"
-    local SCRIPT_NAME="robuntu-install.sh"
     
-    if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
-        sudo wget -qO "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        sudo echo "alias robuntu-install='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
+    if [ ! -f "/usr/local/bin/robuntu-install.sh" ]; then
+        sudo wget -qO "/usr/local/bin/robuntu-install.sh" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/robuntu-install.sh"
+        sudo echo "alias robuntu-install='bash robuntu-install.sh'" >> "$ALIAS_FILE"
     else
         echo "RobuntuInstall already installed"
     fi
