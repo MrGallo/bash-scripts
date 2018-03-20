@@ -10,6 +10,7 @@ FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
 LEVEL_FILE=~/.robuntu_update_level
 CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
+ALIAS_FILE=~/.bash_aliases
 ARG1="$1"
 ARG2="$2"
 
@@ -50,7 +51,7 @@ install () {
     [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" >> ~/.bash_aliases
+        sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
         echo "Running locally"
         bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
         exit 0
@@ -75,9 +76,8 @@ update () {
         if (( tmpFileVersion > currentVersion )); then 
             #echo "Newer version found."
             echo "Updating to latest version (v${VERSION}r${REVISION} to v${tmpFileV}r${tmpFileR})."
-            sudo cp "$TMP_FILE" "$FILE_PATH$SCRIPT_NAME"
-            rm -f "$TMP_FILE"
-            
+            sudo mv "$TMP_FILE" "$FILE_PATH$SCRIPT_NAME"
+
             # echo "Running updated version..."
             bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
             exit 0
@@ -180,7 +180,7 @@ installTestModeScript_20180309() {
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
     
     echo "Adding system alias 'test-mode'."
-    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
+    sudo echo "alias test-mode='bash test-mode.sh'" >> "$ALIAS_FILE"
 }
 
 
