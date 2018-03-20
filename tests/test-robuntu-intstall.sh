@@ -16,8 +16,6 @@ setUp() {
     APP_ALREADY_INSTALLED=( isInstalledApp1 isInstalledApp2 )
     isInstalledApp1() { false; }
     isInstalledApp2() { false; }
-
-
 }
 
 
@@ -279,6 +277,17 @@ test_isInstalledPlayIsFalseWhenNotFullyInstalled() {
 
     rmdir ~/.sbt
     rmdir ~/.ivy2
+}
+
+test_isInstalledRobuntuUpdateIsFalseWhenNotInstalled() {
+    rm -f "/usr/local/bin/robuntu-update.sh"
+    assertFalse "RobuntuUpdate should not be installed" isInstalledRobuntuUpdate
+}
+
+test_isInstalledRobuntuUpdateIsTrueWhenInstalled() {
+    sudo touch /usr/local/bin/robuntu-update.sh
+    assertTrue "RobuntuUpdate should be installed" isInstalledRobuntuUpdate
+    sudo rm -f /usr/local/bin/robuntu-update.sh
 }
 
 

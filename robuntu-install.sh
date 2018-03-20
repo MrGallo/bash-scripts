@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="1.0.3"
+VERSION="1.0.4"
 DATE="17 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -12,16 +12,19 @@ ARG1="$1"
 ARG2="$2"
 APPS=(
     "TestMode"
+    "RobuntuUpdate"
     "Play Framework"
 )
 
 APP_DESCRIPTIONS=(
     "Locks certain inernet sites when enabled.\n\tReverts linux file state when disabled."
+    "Script to provide quick and easy Robuntu image updates without having to \n\tre-install the entire image on every chromebook."
     "Framework for creating web apps with Java (or Scala).\n\tVisit www.playframework.com for more info."
 )
 
 APP_INSTALL=( 
     installTestMode
+    installRobuntuUpdate
     installPlay 
 )
 
@@ -43,6 +46,18 @@ installTestMode() {
     echo "... Done!"
 }
 
+installRobuntuUpdate() {
+    local SCRIPT_NAME="robuntu-update.sh"
+    local FILE_PATH="/usr/local/bin/"
+    local LEVEL_FILE=~/.robuntu_update_level
+    
+    [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
+    
+    sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
+    sudo echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
+  
+}
+
 installPlay() { 
     echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
@@ -54,8 +69,12 @@ installPlay() {
     sudo rm -f ~/scala-plugin.zip
 }
 
+
+
+# --------------------------------------------------------------
 APP_ALREADY_INSTALLED=(
     isInstalledTestMode
+    isInstalledRobuntuUpdate
     isInstalledPlay    
 )
 
@@ -66,6 +85,15 @@ isInstalledTestMode() {
         false
     fi
 }
+
+isInstalledRobuntuUpdate() {
+    if [ -f "/usr/local/bin/robuntu-update.sh" ]; then
+        true
+    else
+        false
+    fi
+}
+
 isInstalledPlay() { 
     if [ -d ~/.ivy2 ] && [ -d ~/.sbt ] && [ -d ~/.Intelli*/config/plugins/Scala ]; then
         true
