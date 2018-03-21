@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="1.0.4"
-DATE="17 March 2018"
+VERSION="1.0.5"
+DATE="21 March 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -64,7 +64,7 @@ installPlay() {
     sudo apt-get update
     sudo apt-get install sbt
     
-    wget -qO ~/scala-plugin.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=44173"
+    wget -qO ~/scala-plugin.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=44318"
     find ~ -name '.Intelli*' -exec unzip ~/scala-plugin.zip -d {}/config/plugins/ \;
     sudo rm -f ~/scala-plugin.zip
 }
