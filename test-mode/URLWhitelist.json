@@ -1,5 +1,11 @@
 {
     "URLWhitelist": [
+        "classroom.google.com",
+        "docs.google.com/forms"
+    ]
+}
+
+/*
         "github.com/MrGallo/cheatsheets",
         "github.com/mrgallo/cheatsheets",
         "classroom.google.com",
@@ -8,5 +14,4 @@
         "oracle.com",
         "python.org",
         "processing.org"
-    ]
-}
+*/
