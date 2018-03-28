@@ -2,7 +2,10 @@
     "URLWhitelist": [
         "github.com/MrGallo/cheatsheets",
         "github.com/mrgallo/cheatsheets",
+        "gist.github.com/mrgallo",
+        "gist.github.com/MrGallo",
         "classroom.google.com",
+        "docs.google.com/forms",
         "chrome://*",
         "oracle.com",
         "python.org",
