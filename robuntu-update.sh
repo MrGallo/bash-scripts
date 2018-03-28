@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="21"
+REVISION="22"
 DATE="28 March 2018"
 AUTHOR="Mr. Gallo"
 
