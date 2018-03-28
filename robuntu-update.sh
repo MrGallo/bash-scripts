@@ -202,7 +202,7 @@ show_update_details() {
 show_help() {
     show_header
     
-    echo "Usage: update-robuntu [-options] [args]"
+    echo "Usage: robuntu-update [-options] [args]"
     echo "options:"
     echo "    -help, -h             Help screen"
     echo "    -level                Check robuntu's current update level"
