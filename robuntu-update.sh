@@ -51,7 +51,7 @@ install () {
     [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
+        sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
         echo "Running locally"
         bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
         exit 0
@@ -131,7 +131,7 @@ do_update () {
     
     # update level file
     CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
-    echo $CURRENT_LEVEL > $LEVEL_FILE   
+    echo "$CURRENT_LEVEL" | sudo tee "$LEVEL_FILE"
 }
 
 installRobuntuInstall_20180317() {
@@ -141,7 +141,7 @@ installRobuntuInstall_20180317() {
     
     if [ ! -f "/usr/local/bin/robuntu-install.sh" ]; then
         sudo wget -qO "/usr/local/bin/robuntu-install.sh" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/robuntu-install.sh"
-        sudo echo "alias robuntu-install='bash robuntu-install.sh'" >> "$ALIAS_FILE"
+        echo "alias robuntu-install='bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
     else
         echo "RobuntuInstall already installed"
     fi
