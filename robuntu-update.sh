@@ -9,10 +9,10 @@ AUTHOR="Mr. Gallo"
 FILE_PATH="/usr/local/bin/"
 TMP_FILE="/tmp/$SCRIPT_NAME"
 LEVEL_FILE=~/.robuntu_update_level
-CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
 ALIAS_FILE=~/.bash_aliases
 ARG1="$1"
 ARG2="$2"
+[ -f "$LEVEL_FILE" ] && CURRENT_LEVEL=$(head -1 $LEVEL_FILE)
 
 main() {
     check_for_options
