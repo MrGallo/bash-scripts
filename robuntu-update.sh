@@ -48,7 +48,7 @@ check_for_options() {
 
 
 install () {
-    [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
+    [ ! -f "$LEVEL_FILE" ] && echo "0" | sudo tee "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
         sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
@@ -180,7 +180,7 @@ installTestModeScript_20180309() {
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
     
     echo "Adding system alias 'test-mode'."
-    sudo echo "alias test-mode='bash test-mode.sh'" >> "$ALIAS_FILE"
+    echo "alias test-mode='bash test-mode.sh'" | sudo tee -a "$ALIAS_FILE"
 }
 
 
@@ -227,7 +227,7 @@ update_specific() {
 
 set_level() {
     if exists_ARG2; then
-        echo "$ARG2" > "$LEVEL_FILE"
+        echo "$ARG2" | sudo tee "$LEVEL_FILE"
         echo "Successfully set update level to $ARG2"
     else
         echo "Error: Need to specify a level to set."
