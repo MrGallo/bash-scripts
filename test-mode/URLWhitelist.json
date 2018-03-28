@@ -1,5 +1,6 @@
 {
     "URLWhitelist": [
+        "accounts.google.com",
         "classroom.google.com",
         "docs.google.com/forms"
     ]
