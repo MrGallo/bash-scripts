@@ -33,7 +33,7 @@ installTestMode() {
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
     
     echo "Adding system alias 'test-mode'."
-    sudo echo "alias test-mode='bash test-mode.sh'" >> ~/.bash_aliases
+    echo "alias test-mode='bash test-mode.sh'" | sudo tee -a ~/.bash_aliases
     
     echo "Configuring test-mode"
     echo "Initializing git repository in home directory."
@@ -51,10 +51,10 @@ installRobuntuUpdate() {
     local FILE_PATH="/usr/local/bin/"
     local LEVEL_FILE=~/.robuntu_update_level
     
-    [ ! -f "$LEVEL_FILE" ] && echo "0" > "$LEVEL_FILE"
+    [ ! -f "$LEVEL_FILE" ] && echo "0" | sudo tee "$LEVEL_FILE"
     
     sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-    sudo echo "alias update-robuntu='bash $SCRIPT_NAME'" >> ~/.bash_aliases
+    echo "alias update-robuntu='bash $SCRIPT_NAME'" | sudo tee -a ~/.bash_aliases
   
 }
 
@@ -131,7 +131,7 @@ checkOptions() {
 install() {
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -qO "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        sudo echo "alias robuntu-install='bash $SCRIPT_NAME'" >> "$ALIAS_FILE"
+        echo "alias robuntu-install='bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
 
         if inProduction; then
             echo "Running locally"
