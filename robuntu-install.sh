@@ -131,7 +131,7 @@ checkOptions() {
 install() {
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -qO "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        echo "alias robuntu-install='bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
+        echo "alias robuntu-install='sudo bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
 
         if inProduction; then
             echo "Running locally"
