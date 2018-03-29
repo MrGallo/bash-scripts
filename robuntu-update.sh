@@ -149,7 +149,7 @@ installRobuntuInstall_20180317() {
     
     if [ ! -f "/usr/local/bin/robuntu-install.sh" ]; then
         sudo wget -qO "/usr/local/bin/robuntu-install.sh" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/robuntu-install.sh"
-        echo "alias robuntu-install='bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
+        echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
     else
         echo "RobuntuInstall already installed"
     fi
