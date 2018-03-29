@@ -51,7 +51,7 @@ install () {
     [ ! -f "$LEVEL_FILE" ] && echo "0" | sudo tee "$LEVEL_FILE"
     if [ ! -f $FILE_PATH$SCRIPT_NAME ]; then
         sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-        sudo echo "alias robuntu-update='bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
+        sudo echo "alias robuntu-update='sudo bash $SCRIPT_NAME'" | sudo tee -a "$ALIAS_FILE"
         echo "Running locally"
         bash $FILE_PATH$SCRIPT_NAME $ARG1 $ARG2
         exit 0
