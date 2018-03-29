@@ -138,8 +138,8 @@ do_update () {
 rewriteAliasFile() {
     sudo rm -f "$ALIAS_FILE"
     echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee "$ALIAS_FILE"
-    echo "alias robuntu-update='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
-    echo "alias robuntu-update='sudo bash test-mode.sh'" | sudo tee -a "$ALIAS_FILE"
+    echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
+    echo "alias test-mode='sudo bash test-mode.sh'" | sudo tee -a "$ALIAS_FILE"
 }
 
 installRobuntuInstall_20180317() {
