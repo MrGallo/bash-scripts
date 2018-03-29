@@ -33,7 +33,7 @@ installTestMode() {
     sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
     
     echo "Adding system alias 'test-mode'."
-    echo "alias test-mode='bash test-mode.sh'" | sudo tee -a ~/.bash_aliases
+    echo "alias test-mode='sudo bash test-mode.sh'" | sudo tee -a ~/.bash_aliases
     
     echo "Configuring test-mode"
     echo "Initializing git repository in home directory."
@@ -54,7 +54,7 @@ installRobuntuUpdate() {
     [ ! -f "$LEVEL_FILE" ] && echo "0" | sudo tee "$LEVEL_FILE"
     
     sudo wget -O "$FILE_PATH$SCRIPT_NAME" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$SCRIPT_NAME"
-    echo "alias update-robuntu='bash $SCRIPT_NAME'" | sudo tee -a ~/.bash_aliases
+    echo "alias update-robuntu='sudo bash $SCRIPT_NAME'" | sudo tee -a ~/.bash_aliases
   
 }
 
