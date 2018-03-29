@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="23"
+REVISION="24"
 DATE="28 March 2018"
 AUTHOR="Mr. Gallo"
 
@@ -113,7 +113,8 @@ do_updates() {
         1) do_update installTestModeScript_20180309   ;&
         2) do_update configureTestModeScript_20180309 ;&
         3) do_update fixBottomPanel_20180309          ;&
-        4) do_update installRobuntuInstall_20180317   ;;
+        4) do_update installRobuntuInstall_20180317   ;&
+        5) do_update rewriteAliasFile                 ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -132,6 +133,13 @@ do_update () {
     # update level file
     CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
     echo "$CURRENT_LEVEL" | sudo tee "$LEVEL_FILE"
+}
+
+rewriteAliasFile() {
+    sudo rm -f "$ALIAS_FILE"
+    echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee "$ALIAS_FILE"
+    echo "alias robuntu-update='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
+    echo "alias robuntu-update='sudo bash test-mode.sh'" | sudo tee -a "$ALIAS_FILE"
 }
 
 installRobuntuInstall_20180317() {
