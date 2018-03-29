@@ -55,9 +55,9 @@ doStart() {
     sudo git commit -m "Pre-test save"
 
     #    change taskbar alpha
-    sudo xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 0
+    xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 0
     # turn off background image
-    sudo xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 0
+    xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 0
     
     # Enable Internet blocking
     sudo wget -qO /etc/chromium-browser/policies/managed/URLBlacklist.json "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode/URLBlacklist.json"
@@ -78,9 +78,9 @@ doStop() {
     sudo git add -A && sudo git stash -a && sudo git stash drop
 
     #    change taskbar alpha
-    sudo xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 100
+    xfconf-query -c xfce4-panel -p /panels/panel-1/background-alpha -s 100
     # turn off background image
-    sudo xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 5
+    xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitor0/workspace0/image-style -s 5
     
     # Disable Internet blocking
     sudo rm -f /etc/chromium-browser/policies/managed/URLBlacklist.json
