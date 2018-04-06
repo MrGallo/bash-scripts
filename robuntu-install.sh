@@ -63,10 +63,6 @@ installPlay() {
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
     sudo apt-get update
     sudo apt-get install sbt
-    
-    wget -qO ~/scala-plugin.zip "https://plugins.jetbrains.com/plugin/download?rel=true&updateId=44318"
-    find ~ -name '.Intelli*' -exec unzip ~/scala-plugin.zip -d {}/config/plugins/ \;
-    sudo rm -f ~/scala-plugin.zip
 }
 
 
@@ -95,7 +91,7 @@ isInstalledRobuntuUpdate() {
 }
 
 isInstalledPlay() { 
-    if [ -d ~/.ivy2 ] && [ -d ~/.sbt ] && [ -d ~/.Intelli*/config/plugins/Scala ]; then
+    if [ -d ~/.ivy2 ] && [ -d ~/.sbt ]; then
         true
     else
         false
