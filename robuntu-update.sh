@@ -2,8 +2,8 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="24"
-DATE="28 March 2018"
+REVISION="25"
+DATE="11 April 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -114,7 +114,8 @@ do_updates() {
         2) do_update configureTestModeScript_20180309 ;&
         3) do_update fixBottomPanel_20180309          ;&
         4) do_update installRobuntuInstall_20180317   ;&
-        5) do_update rewriteAliasFile                 ;;
+        5) do_update rewriteAliasFile                 ;&
+        6) do_update setGitGlobal_20180411            ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -135,7 +136,16 @@ do_update () {
     echo "$CURRENT_LEVEL" | sudo tee "$LEVEL_FILE"
 }
 
+setGitGlobal_20180411() {
+    show_update_details "Set git global variables" && return
+    
+    git config --global user.name "robuntu"
+    git config --global user.email "robuntu@robuntu.ca"
+}
+
 rewriteAliasFile() {
+    show_update_details "Rewrite .bashrc_aliases file" && return
+    
     sudo rm -f "$ALIAS_FILE"
     echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee "$ALIAS_FILE"
     echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
