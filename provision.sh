@@ -98,6 +98,14 @@ sudo echo "text/x-processing=processing.desktop" >> /usr/share/applications/defa
 
 # TODO: add processing to launcher
 
-# TODO: edit gedit settings
+# edit gedit settings
+gsettings set org.gnome.gedit.preferences.editor highlight-current-line true
+gsettings set org.gnome.gedit.preferences.editor bracket-matching true
+gsettings set org.gnome.gedit.preferences.editor display-line-numbers true
+gsettings set org.gnome.gedit.preferences.editor insert-spaces true
+gsettings set org.gnome.gedit.preferences.editor right-margin-position 'uint32 80'
+gsettings set org.gnome.gedit.preferences.editor tabs-size 'uint32 4'
+gsettings set org.gnome.gedit.preferences.editor auto-indent true
+gsettings set org.gnome.gedit.preferences.editor syntax-highlighting true
 
 # TODO: add chromium to launcher incognito, 
