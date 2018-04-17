@@ -8,12 +8,20 @@ echo "robuntu" | sudo -S echo "Begin image provisioning"
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git
+sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git -y
+
+# CONFIRMED /\___________________________/\
 
 # Java 8 
-sudo add-apt-repository ppa:webupd8team/java
+# sudo add-apt-repository ppa:webupd8team/java
+# sudo apt-get update
+# sudo apt-get install oracle-java8-installer
+# silent
+sudo apt-get install -y python-software-properties debconf-utils
+sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
-sudo apt-get install oracle-java8-installer
+echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
+sudo apt-get install -y oracle-java8-installer
 
 # Python 3.6
 sudo add-apt-repository ppa:deadsnakes/ppa
