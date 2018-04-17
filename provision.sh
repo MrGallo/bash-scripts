@@ -28,8 +28,8 @@ sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get install python3.6
 
-# TODO: download and extract pycharm pro to /opt
-# TODO: download and extract intellij ultimate to /opt
+# TODO: download and extract pycharm pro to /opt/PyCharm
+# TODO: download and extract intellij ultimate to /opt/IntelliJ
 
 # Android
 sudo apt-get install libc6-dev-i386 lib32z1 default-jdk
@@ -96,8 +96,6 @@ wait $$
 echo "Associating file in defaluts.list"
 sudo echo "text/x-processing=processing.desktop" >> /usr/share/applications/defaults.list
 
-# TODO: add processing to launcher
-
 # edit gedit settings
 gsettings set org.gnome.gedit.preferences.editor highlight-current-line true
 gsettings set org.gnome.gedit.preferences.editor bracket-matching true
@@ -108,4 +106,3 @@ gsettings set org.gnome.gedit.preferences.editor tabs-size 'uint32 4'
 gsettings set org.gnome.gedit.preferences.editor auto-indent true
 gsettings set org.gnome.gedit.preferences.editor syntax-highlighting true
 
-# TODO: add chromium to launcher incognito, 
