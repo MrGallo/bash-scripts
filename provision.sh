@@ -10,33 +10,31 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git -y
 
-# CONFIRMED /\___________________________/\
+
 
 # Java 8 
 sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
+
+# Work-around until webupd8 is updated
 sudo sed -i 's|JAVA_VERSION=8u161|JAVA_VERSION=8u172|' /var/lib/dpkg/info/oracle-java8-installer.*
 sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/|' /var/lib/dpkg/info/oracle-java8-installer.*
 sudo sed -i 's|SHA256SUM_TGZ="6dbc56a0e3310b69e91bb64db63a485bd7b6a8083f08e48047276380a0e2021e"|SHA256SUM_TGZ="28a00b9400b6913563553e09e8024c286b506d8523334c93ddec6c9ec7e9d346"|' /var/lib/dpkg/info/oracle-java8-installer.*
 sudo sed -i 's|J_DIR=jdk1.8.0_161|J_DIR=jdk1.8.0_172|' /var/lib/dpkg/info/oracle-java8-installer.*
+# End work-around
+
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 sudo apt-get install -y oracle-java8-installer
 
-# sudo add-apt-repository -y ppa:webupd8team/java
-# sudo apt-get update
-# echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-# sudo apt-get install -y oracle-java8-installer
-# silent
-# sudo apt-get install -y python-software-properties debconf-utils
-# sudo add-apt-repository -y ppa:webupd8team/java
-# sudo apt-get update
-# echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-# sudo apt-get install -y oracle-java8-installer
+# CONFIRMED /\___________________________/\
+
 
 # Python 3.6
-sudo add-apt-repository ppa:deadsnakes/ppa
+sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get update
-sudo apt-get install python3.6
+sudo apt-get install -y python3.6
+echo "alias python3='python3.6'" >> ~/.bash_aliases
+echo "alias python='python3'" >> ~/.bash_aliases
 
 # TODO: download and extract pycharm pro to /opt/PyCharm
 # TODO: download and extract intellij ultimate to /opt/IntelliJ
