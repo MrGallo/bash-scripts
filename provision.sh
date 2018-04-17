@@ -8,7 +8,7 @@ echo "robuntu" | sudo -S echo "Begin image provisioning"
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family
+sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git
 
 # Java 8 
 sudo add-apt-repository ppa:webupd8team/java
