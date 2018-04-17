@@ -26,8 +26,6 @@ sudo sed -i 's|J_DIR=jdk1.8.0_161|J_DIR=jdk1.8.0_172|' /var/lib/dpkg/info/oracle
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 sudo apt-get install -y oracle-java8-installer
 
-# CONFIRMED /\___________________________/\
-
 
 # Python 3.6
 sudo add-apt-repository -y ppa:deadsnakes/ppa
@@ -36,8 +34,21 @@ sudo apt-get install -y python3.6
 echo "alias python3='python3.6'" >> ~/.bash_aliases
 echo "alias python='python3'" >> ~/.bash_aliases
 
-# TODO: download and extract pycharm pro to /opt/PyCharm
-# TODO: download and extract intellij ultimate to /opt/IntelliJ
+
+# download and extract pycharm pro to /opt/PyCharm
+wget https://download.jetbrains.com/python/pycharm-professional-2018.1.1.tar.gz
+sudo tar -C /opt -xzf pycharm-professional-2018.1.1.tar.gz
+sudo mv /opt/pycharm-2018.1.1/ /opt/PyCharm
+sudo rm -rf pycharm-professional-2018.1.1.tar.gz
+
+
+# Download and extract intellij ultimate to /opt/IntelliJ
+wget https://download.jetbrains.com/idea/ideaIU-2018.1.1-no-jdk.tar.gz
+sudo tar -C /opt -xzf ideaIU-2018.1.1-no-jdk.tar.gz
+find /opt/ -maxdepth 1 -name 'idea*' -exec sudo mv "{}" /opt/IntelliJ/ \;
+sudo rm -rf ideaIU-2018.1.1-no-jdk.tar.gz
+
+# CONFIRMED /\___________________________/\
 
 # Android
 sudo apt-get install libc6-dev-i386 lib32z1 default-jdk
