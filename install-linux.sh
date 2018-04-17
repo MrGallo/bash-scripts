@@ -1,3 +1,5 @@
+#!/bin/bash
+
 DIST="xenial"
 
 # install xenial image
