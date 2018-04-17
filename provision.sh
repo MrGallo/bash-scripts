@@ -13,7 +13,14 @@ sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubun
 # CONFIRMED /\___________________________/\
 
 # Java 8 
-# wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.tar.gz
+sudo add-apt-repository -y ppa:webupd8team/java
+sudo apt-get update
+sudo sed -i 's|JAVA_VERSION=8u151|JAVA_VERSION=8u172|' /var/lib/dpkg/info/oracle-java8-installer.*
+sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/|' /var/lib/dpkg/info/oracle-java8-installer.*
+sudo sed -i 's|SHA256SUM_TGZ="c78200ce409367b296ec39be4427f020e2c585470c4eed01021feada576f027f"|SHA256SUM_TGZ="28a00b9400b6913563553e09e8024c286b506d8523334c93ddec6c9ec7e9d346"|' /var/lib/dpkg/info/oracle-java8-installer.*
+sudo sed -i 's|J_DIR=jdk1.8.0_151|J_DIR=jdk1.8.0_162|' /var/lib/dpkg/info/oracle-java8-installer.*
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo apt-get install -y oracle-java8-installer
 
 # sudo add-apt-repository -y ppa:webupd8team/java
 # sudo apt-get update
