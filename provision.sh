@@ -13,7 +13,7 @@ sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubun
 # CONFIRMED /\___________________________/\
 
 # Java 8 
-# wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u151-b12/e758a0de34e24606bca991d704f6dcbf/jdk-8u151-linux-x64.tar.gz
+# wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.tar.gz
 
 # sudo add-apt-repository -y ppa:webupd8team/java
 # sudo apt-get update
