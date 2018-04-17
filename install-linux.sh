@@ -5,7 +5,6 @@ PROVISION_FILE="provision-test.sh"
 
 # install xenial image
 # duration: 10 min
-cd ~/Downloads
 curl -O https://goo.gl/fd3zc
 sudo sh crouton -r "$DIST" -t xfce,touch,extension
 
