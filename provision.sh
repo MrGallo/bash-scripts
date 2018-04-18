@@ -65,7 +65,7 @@ sudo # TODO: get proper bin path/sdkmanager "platforms;android-27" "build-tools;
 
 # Processing
 PROCESSING_VERSION="3.3.7"
-wget -O ~/processing.tgz http://download.processing.org/processing-3.3.7-linux64.tgz
+wget -O ~/processing.tgz http://download.processing.org/processing-$PROCESSING_VERSION-linux64.tgz
 echo "Installing Processing.\nYou may have to enter the password"
 
 echo "Unzipping Processing to /opt folder"
@@ -75,7 +75,7 @@ sudo find /opt -maxdepth 1 -name 'processing*' -exec sudo mv {} /opt/processing 
 sudo rm -f ~/processing.tgz
 
 echo "Adding Processing to \$PATH"
-sudo su -c "ln -s /opt/processing-$PROCESSING_VERSION/processing /usr/local/bin/processing"
+sudo su -c "ln -s /opt/processing/processing /usr/local/bin/processing"
 
 echo "Creating .desktop file in applications"
 sudo touch /usr/share/applications/processing.desktop
@@ -84,7 +84,7 @@ Version=$PROCESSING_VERSION
 Name=Processing
 Comment=Processing Rocks
 Exec=processing
-Icon=/opt/processing-$PROCESSING_VERSION/lib/icons/pde-256.png
+Icon=/opt/processing/lib/icons/pde-256.png
 Terminal=false
 Type=Application
 Categories=AudioVideo;Video;Graphics;" >> /usr/share/applications/processing.desktop
