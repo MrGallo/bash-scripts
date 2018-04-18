@@ -41,6 +41,8 @@ sudo tar -C /opt -xzf pycharm-professional-2018.1.1.tar.gz
 sudo mv /opt/pycharm-2018.1.1/ /opt/PyCharm
 sudo rm -rf pycharm-professional-2018.1.1.tar.gz
 
+# TODO: download pycharm settings to 
+
 
 # Download and extract intellij ultimate to /opt/IntelliJ
 wget https://download.jetbrains.com/idea/ideaIU-2018.1.1-no-jdk.tar.gz
