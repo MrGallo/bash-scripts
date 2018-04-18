@@ -71,7 +71,7 @@ echo "Installing Processing.\nYou may have to enter the password"
 echo "Unzipping Processing to /opt folder"
 sudo tar -xzvf ~/processing.tgz -C /opt/
 wait $$
-
+sudo find /opt -maxdepth 1 -name 'processing*' -exec sudo mv {} /opt/processing \;
 sudo rm -f ~/processing.tgz
 
 echo "Adding Processing to \$PATH"
