@@ -63,9 +63,7 @@ sudo # TODO: get proper bin path/sdkmanager "platforms;android-27" "build-tools;
 
 # TODO: download IntelliJ settings file
 
-
 # Processing
-# TODO: download processing to ~
 PROCESSING_VERSION="3.3.7"
 wget -O ~/processing.tgz http://download.processing.org/processing-3.3.7-linux64.tgz
 echo "Installing Processing.\nYou may have to enter the password"
@@ -94,6 +92,7 @@ Categories=AudioVideo;Video;Graphics;" >> /usr/share/applications/processing.des
 echo "Creating file association in Ubuntu between .PDE and .PYDE files and Processing."
 echo "Creating XML file..."
 sudo touch /usr/share/mime/packages/processing.xml
+sudo chmod 666 /usr/share/mime/packages/processing.xml
 sudo echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <mime-info xmlns=\"http://www.freedesktop.org/standards/shared-mime-info\">
 <mime-type type=\"text/x-processing\">
@@ -105,6 +104,7 @@ sudo echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 
 echo "Creating PYDE XML file..."
 sudo touch /usr/share/mime/packages/processing-py.xml
+sudo chmod 666 /usr/share/mime/packages/processing-py.xml
 sudo echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <mime-info xmlns=\"http://www.freedesktop.org/standards/shared-mime-info\">
 <mime-type type=\"text/x-processing\">
@@ -119,6 +119,7 @@ sudo update-mime-database /usr/share/mime
 wait $$
 
 echo "Associating file in defaluts.list"
+sudo chmod 666 /usr/share/applications/defaults.list
 sudo echo "text/x-processing=processing.desktop" >> /usr/share/applications/defaults.list
 
 # edit gedit settings
