@@ -121,6 +121,7 @@ wait $$
 echo "Associating file in defaluts.list"
 sudo chmod 666 /usr/share/applications/defaults.list
 sudo echo "text/x-processing=processing.desktop" >> /usr/share/applications/defaults.list
+sudo apt-get install -y gstreamer0.10-plugins-good
 
 # edit gedit settings
 gsettings set org.gnome.gedit.preferences.editor highlight-current-line true
