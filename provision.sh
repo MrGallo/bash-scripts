@@ -17,10 +17,10 @@ sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
 
 # Work-around until webupd8 is updated
-sudo sed -i 's|JAVA_VERSION=8u161|JAVA_VERSION=8u172|' /var/lib/dpkg/info/oracle-java8-installer.*
-sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/|' /var/lib/dpkg/info/oracle-java8-installer.*
-sudo sed -i 's|SHA256SUM_TGZ="6dbc56a0e3310b69e91bb64db63a485bd7b6a8083f08e48047276380a0e2021e"|SHA256SUM_TGZ="28a00b9400b6913563553e09e8024c286b506d8523334c93ddec6c9ec7e9d346"|' /var/lib/dpkg/info/oracle-java8-installer.*
-sudo sed -i 's|J_DIR=jdk1.8.0_161|J_DIR=jdk1.8.0_172|' /var/lib/dpkg/info/oracle-java8-installer.*
+# sudo sed -i 's|JAVA_VERSION=8u161|JAVA_VERSION=8u172|' /var/lib/dpkg/info/oracle-java8-installer.*
+# sudo sed -i 's|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/|PARTNER_URL=http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/|' /var/lib/dpkg/info/oracle-java8-installer.*
+# sudo sed -i 's|SHA256SUM_TGZ="6dbc56a0e3310b69e91bb64db63a485bd7b6a8083f08e48047276380a0e2021e"|SHA256SUM_TGZ="28a00b9400b6913563553e09e8024c286b506d8523334c93ddec6c9ec7e9d346"|' /var/lib/dpkg/info/oracle-java8-installer.*
+# sudo sed -i 's|J_DIR=jdk1.8.0_161|J_DIR=jdk1.8.0_172|' /var/lib/dpkg/info/oracle-java8-installer.*
 # End work-around
 
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
@@ -48,15 +48,21 @@ sudo tar -C /opt -xzf ideaIU-2018.1.1-no-jdk.tar.gz
 find /opt/ -maxdepth 1 -name 'idea*' -exec sudo mv "{}" /opt/IntelliJ/ \;
 sudo rm -rf ideaIU-2018.1.1-no-jdk.tar.gz
 
-# CONFIRMED /\___________________________/\
+
 
 # Android
-sudo apt-get install libc6-dev-i386 lib32z1 default-jdk
+sudo apt-get install -y libc6-dev-i386 lib32z1 default-jdk
+# CONFIRMED /\___________________________/\
+
 # TODO: download sdk-tools from website
 # TODO: extract to /opt/Android
 
+
 sudo # TODO: get proper bin path/sdkmanager --update
 sudo # TODO: get proper bin path/sdkmanager "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
+
+# TODO: download IntelliJ settings file
+
 
 # Processing
 # TODO: download processing to ~
@@ -124,4 +130,8 @@ gsettings set org.gnome.gedit.preferences.editor right-margin-position 'uint32 8
 gsettings set org.gnome.gedit.preferences.editor tabs-size 'uint32 4'
 gsettings set org.gnome.gedit.preferences.editor auto-indent true
 gsettings set org.gnome.gedit.preferences.editor syntax-highlighting true
+
+# TODO: download .config/xfce files
+
+# TODO: download background image to /usr/share/backgrounds/background1.jpg
 
