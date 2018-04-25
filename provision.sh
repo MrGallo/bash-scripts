@@ -11,7 +11,6 @@ sudo apt-get upgrade
 sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git -y
 
 
-
 # Java 8 
 sudo add-apt-repository -y ppa:webupd8team/java
 sudo apt-get update
@@ -42,6 +41,11 @@ sudo mv /opt/pycharm-2018.1.1/ /opt/PyCharm
 sudo rm -rf pycharm-professional-2018.1.1.tar.gz
 
 # TODO: download pycharm settings to 
+PC_CONFIG_DIR=$(find ~ -maxdepth 1 -name '.PyCharm*')/config
+wget -O $PC_CONFIG_DIR/pycharm.key https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/pycharm.key
+wget -O $PC_CONFIG_DIR/options/ide.general.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/ide.general.xml
+wget -O $PC_CONFIG_DIR/options/project.default.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/project.default.xml
+wget -O $PC_CONFIG_DIR/options/py_sdk_settings.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/py_sdk_settings.xml
 
 
 # Download and extract intellij ultimate to /opt/IntelliJ
