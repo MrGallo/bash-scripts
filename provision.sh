@@ -147,17 +147,28 @@ gsettings set org.gnome.gedit.preferences.editor tabs-size 'uint32 4'
 gsettings set org.gnome.gedit.preferences.editor auto-indent true
 gsettings set org.gnome.gedit.preferences.editor syntax-highlighting true
 
-# TODO: download .config/xfce files
-/desktop-config/xfce4/panel/launcher-1/15197561291.desktop	
-/desktop-config/xfce4/panel/launcher-11/15197525502.desktop	
-/desktop-config/xfce4/panel/launcher-12/15197526083.desktop	
-/desktop-config/xfce4/panel/launcher-10/15197382572.desktop	
-/desktop-config/xfce4/panel/launcher-8/15197524891.desktop	
-/desktop-config/xfce4/panel/launcher-9/15197382571.desktop	
-/desktop-config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml	
-/desktop-config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml	
-/desktop-config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml	
-/desktop-config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml
+# download .config/xfce4 files (Desktop settings and launcher)
+XFCE_FILES=(
+  'xfce4/panel/launcher-1/15197561291.desktop'
+  'xfce4/panel/launcher-11/15197525502.desktop'
+  'xfce4/panel/launcher-12/15197526083.desktop'
+  'xfce4/panel/launcher-10/15197382572.desktop'
+  'xfce4/panel/launcher-8/15197524891.desktop'
+  'xfce4/panel/launcher-9/15197382571.desktop'
+  'xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml'
+  'xfce4/xfconf/xfce-perchannel-xml/xsettings.xml'
+  'xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml'
+  'xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml'
+)
 
-# TODO: download background image to /usr/share/backgrounds/background1.jpg
+count=0
+while [ "x${XFCE_FILES[count]}" != "x" ]
+do
+  XFCE4_FILE=${XFCE_FILES[count]}
+  wget -O ~/.config/$XFCE4_FILE https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/$XFCE4_FILE
+  count=$(( $count + 1 ))
+done
 
+
+# download background image to /usr/share/backgrounds/background1.jpg
+wget -O /usr/share/backgrounds/background1.jpg https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/xfce4/background1.jpg
