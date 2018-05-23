@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=IntelliJ IDEA Ultimate
+Comment=Java IDE
+Exec=/opt/IntelliJ/bin/idea.sh
+Icon=/opt/IntelliJ/bin/idea.png
+Path=
+Terminal=false
+StartupNotify=false
