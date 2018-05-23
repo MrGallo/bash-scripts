@@ -43,6 +43,8 @@ sudo tar -C /opt -xzf $PYCHARM_DOWNLOAD_FILE
 find /opt/ -maxdepth 1 -name 'pycharm*' -exec sudo mv "{}" /opt/PyCharm/ \;
 sudo rm -rf $PYCHARM_DOWNLOAD_FILE
 
+## TODO: try this ->> [[ "asdfsadf-2018.2.3-sf" =~ -([0-9]{4}.[0-9]{1}) ]] && echo ${BASH_REMATCH[1]}
+
 installer_output "download pycharm settings"
 PC_CONFIG_DIR=$(find ~ -maxdepth 1 -name '.PyCharm*')/config
 wget -O $PC_CONFIG_DIR/pycharm.key https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/pycharm.key
