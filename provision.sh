@@ -1,3 +1,7 @@
+# Need update
+SDK_TOOLS='sdk-tools-linux-3859397.zip'
+
+#--
 
 # provision.sh commands
 # out of chroot
@@ -40,7 +44,7 @@ sudo tar -C /opt -xzf pycharm-professional-2018.1.1.tar.gz
 sudo mv /opt/pycharm-2018.1.1/ /opt/PyCharm
 sudo rm -rf pycharm-professional-2018.1.1.tar.gz
 
-# TODO: download pycharm settings to 
+# download pycharm settings
 PC_CONFIG_DIR=$(find ~ -maxdepth 1 -name '.PyCharm*')/config
 wget -O $PC_CONFIG_DIR/pycharm.key https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/pycharm.key
 wget -O $PC_CONFIG_DIR/options/ide.general.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/ide.general.xml
@@ -58,14 +62,16 @@ sudo rm -rf ideaIU-2018.1.1-no-jdk.tar.gz
 
 # Android
 sudo apt-get install -y libc6-dev-i386 lib32z1 default-jdk
+
+wget https://dl.google.com/android/repository/$SDK_TOOLS
+mkdir android
+unzip $SDK_TOOLS -d android/
+rm -rf $SDK_TOOLS
+
 # CONFIRMED /\___________________________/\
 
-# TODO: download sdk-tools from website
-# TODO: extract to /opt/Android
-
-
-sudo # TODO: get proper bin path/sdkmanager --update
-sudo # TODO: get proper bin path/sdkmanager "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
+sudo android/tools/bin/sdkmanager --update ## TODO: need to force "yes"
+sudo android/tools/bin/ "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
 
 # TODO: download IntelliJ settings file
 
