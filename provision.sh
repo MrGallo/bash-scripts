@@ -4,10 +4,7 @@ PROCESSING_VERSION="3.3.7"   # http://processing.org
 #--
 
 # provision.sh commands
-# out of chroot
-sudo sh -e ~/Downloads/crouton -r "$DIST" -t keyboard -u
 
-# In chroot
 echo "robuntu" | sudo -S echo "Begin image provisioning"
 
 sudo apt-get update
