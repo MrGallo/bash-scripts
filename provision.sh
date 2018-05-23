@@ -1,6 +1,6 @@
 # Need update
 SDK_TOOLS='sdk-tools-linux-3859397.zip'
-
+PROCESSING_VERSION="3.3.7"   # http://processing.org
 #--
 
 # provision.sh commands
@@ -78,12 +78,9 @@ wget -O $IJ_CONFIG_DIR/options/ide.general.xml https://raw.githubusercontent.com
 wget -O $IJ_CONFIG_DIR/options/project.default.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/project.default.xml
 wget -O $IJ_CONFIG_DIR/options/jdk.table.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/jdk.table.xml
 
-# CONFIRMED /\___________________________/\
-
 # Processing
-PROCESSING_VERSION="3.3.7"
 wget -O ~/processing.tgz http://download.processing.org/processing-$PROCESSING_VERSION-linux64.tgz
-echo "Installing Processing.\nYou may have to enter the password"
+echo "Installing Processing."
 
 echo "Unzipping Processing to /opt folder"
 sudo tar -xzvf ~/processing.tgz -C /opt/
@@ -151,6 +148,7 @@ gsettings set org.gnome.gedit.preferences.editor auto-indent true
 gsettings set org.gnome.gedit.preferences.editor syntax-highlighting true
 
 # TODO: download .config/xfce files
+
 
 # TODO: download background image to /usr/share/backgrounds/background1.jpg
 
