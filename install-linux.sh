@@ -6,12 +6,14 @@
 # enter `robuntu` for username and `robuntu` for password.
 
 DIST="xenial"
-PROVISION_FILE="provision-test.sh"
+PROVISION_FILE="provision.sh"
 
 # install xenial image
 # duration: 10 min
 curl -O https://raw.githubusercontent.com/dnschneid/crouton/master/installer/crouton
 sudo sh crouton -r "$DIST" -t xfce,touch,extension
+
+sudo sh -e ~/Downloads/crouton -r "$DIST" -t keyboard -u
 
 # run provision.sh in chroot 
 # TODO: (download file from github)
