@@ -68,12 +68,17 @@ mkdir android
 unzip $SDK_TOOLS -d android/
 rm -rf $SDK_TOOLS
 
+yes | sudo android/tools/bin/sdkmanager --update
+sudo android/tools/bin/sdkmanager "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
+
+# download intellij settings
+IJ_CONFIG_DIR=$(find ~ -maxdepth 1 -name '.IntelliJ*')/config
+wget -O $IJ_CONFIG_DIR/idea.key https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/idea.key
+wget -O $IJ_CONFIG_DIR/options/ide.general.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/ide.general.xml
+wget -O $IJ_CONFIG_DIR/options/project.default.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/project.default.xml
+wget -O $IJ_CONFIG_DIR/options/jdk.table.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/jdk.table.xml
+
 # CONFIRMED /\___________________________/\
-
-sudo android/tools/bin/sdkmanager --update ## TODO: need to force "yes"
-sudo android/tools/bin/ "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
-
-# TODO: download IntelliJ settings file
 
 # Processing
 PROCESSING_VERSION="3.3.7"
