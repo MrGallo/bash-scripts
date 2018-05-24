@@ -25,6 +25,9 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git curl -y
 
+installer_output "Git settings"
+git config --global user.email "robuntu@stro.ycdsb.ca"
+git config --global user.name "robuntu"
 
 installer_output "Java 8"
 sudo add-apt-repository -y ppa:webupd8team/java
