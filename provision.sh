@@ -19,7 +19,7 @@ installer_output() {
   echo "**********************************************"
 }
 
-echo "robuntu" | sudo -S installer_output "Begin image provisioning"
+echo "robuntu" | sudo -S echo "Begin image provisioning"
 
 sudo apt-get update
 sudo apt-get upgrade
