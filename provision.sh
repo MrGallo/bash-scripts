@@ -64,7 +64,6 @@ installer_output "download pycharm settings"
 [[ $PYCHARM_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && PYCHARM_VERSION=${BASH_REMATCH[1]}
 PYCHARM_FOLDER=~/.PyCharm${PYCHARM_VERSION}
 mkdir $PYCHARM_FOLDER
-sudo chmod -R 755 $PYCHARM_FOLDER
 
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/pycharm.key --create-dirs -o $PYCHARM_FOLDER/config/pycharm.key
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/ide.general.xml --create-dirs -o $PYCHARM_FOLDER/config/options/ide.general.xml
@@ -98,7 +97,6 @@ installer_output "download intellij settings"
 [[ $INTELLIJ_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && IDEA_VERSION=${BASH_REMATCH[1]}
 IDEA_FOLDER=~/.IntelliJIdea${IDEA_VERSION}
 mkdir $IDEA_FOLDER
-sudo chmod -R 755 $IDEA_FOLDER
 
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/idea.key --create-dirs -o $IDEA_FOLDER/config/idea.key
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/ide.general.xml --create-dirs -o $IDEA_FOLDER/config/options/ide.general.xml
@@ -197,7 +195,6 @@ do
   sudo curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/$XFCE4_FILE --create-dirs -o  ~/.config/$XFCE4_FILE
   count=$(( $count + 1 ))
 done
-sudo chmod -R 755 ~/.config
 
 installer_output "Download background image to /usr/share/backgrounds/background1.jpg"
 sudo wget -O /usr/share/backgrounds/background1.jpg https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/xfce4/background1.jpg
