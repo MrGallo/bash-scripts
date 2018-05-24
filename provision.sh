@@ -7,7 +7,7 @@ PROCESSING_VERSION="3.3.7"   # http://processing.org
 
 # provision.sh commands
 
-echo "robuntu" | sudo -S echo "Begin image provisioning"
+echo "robuntu" | sudo -S installer_output "Begin image provisioning"
 
 sudo apt-get update
 sudo apt-get upgrade
