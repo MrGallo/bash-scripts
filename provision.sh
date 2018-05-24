@@ -7,6 +7,18 @@ PROCESSING_VERSION="3.3.7"   # http://processing.org
 
 # provision.sh commands
 
+installer_output() {
+  echo "**********************************************"
+  echo "**********************************************"
+  echo "**********************************************"
+  echo ""
+  echo $1
+  echo ""
+  echo "**********************************************"
+  echo "**********************************************"
+  echo "**********************************************"
+}
+
 echo "robuntu" | sudo -S installer_output "Begin image provisioning"
 
 sudo apt-get update
@@ -184,15 +196,3 @@ done
 
 installer_output "Download background image to /usr/share/backgrounds/background1.jpg"
 sudo wget -O /usr/share/backgrounds/background1.jpg https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/xfce4/background1.jpg
-
-installer_output() {
-  echo "**********************************************"
-  echo "**********************************************"
-  echo "**********************************************"
-  echo ""
-  echo $1
-  echo ""
-  echo "**********************************************"
-  echo "**********************************************"
-  echo "**********************************************"
-}
