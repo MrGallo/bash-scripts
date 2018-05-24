@@ -16,8 +16,7 @@ sudo sh crouton -r "$DIST" -t xfce,touch,extension
 sudo sh -e ~/Downloads/crouton -r "$DIST" -t keyboard -u
 
 # run provision.sh in chroot 
-# TODO: (download file from github)
-# cat provision.sh | sudo enter-chroot
+# duration 16 min
 curl -O https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/$PROVISION_FILE
 cat "$PROVISION_FILE" | sudo enter-chroot
 
