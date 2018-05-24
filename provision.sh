@@ -79,9 +79,6 @@ sudo android/tools/bin/sdkmanager "platforms;android-27" "build-tools;27.0.3" "e
 
 installer_output "download intellij settings"
 
-#del
-INTELLIJ_DOWNLOAD_FILE='ideaIU-2018.1.3-no-jdk.tar.gz'
-
 [[ $INTELLIJ_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && IDEA_VERSION=${BASH_REMATCH[1]}
 IDEA_FOLDER=~/.IntelliJIdea${IDEA_VERSION}
 mkdir $IDEA_FOLDER
