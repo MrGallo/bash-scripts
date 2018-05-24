@@ -11,7 +11,7 @@ echo "robuntu" | sudo -S echo "Begin image provisioning"
 
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git -y
+sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git curl -y
 
 
 installer_output "Java 8"
@@ -43,14 +43,17 @@ sudo tar -C /opt -xzf $PYCHARM_DOWNLOAD_FILE
 find /opt/ -maxdepth 1 -name 'pycharm*' -exec sudo mv "{}" /opt/PyCharm/ \;
 sudo rm -rf $PYCHARM_DOWNLOAD_FILE
 
-## TODO: try this ->> [[ "asdfsadf-2018.2.3-sf" =~ -([0-9]{4}.[0-9]{1}) ]] && echo ${BASH_REMATCH[1]}
 
 installer_output "download pycharm settings"
-PC_CONFIG_DIR=$(find ~ -maxdepth 1 -name '.PyCharm*')/config
-wget -O $PC_CONFIG_DIR/pycharm.key https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/pycharm.key
-wget -O $PC_CONFIG_DIR/options/ide.general.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/ide.general.xml
-wget -O $PC_CONFIG_DIR/options/project.default.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/project.default.xml
-wget -O $PC_CONFIG_DIR/options/py_sdk_settings.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/py_sdk_settings.xml
+
+[[ $PYCHARM_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && PYCHARM_VERSION=${BASH_REMATCH[1]}
+PYCHARM_FOLDER=~/.PyCharm${PYCHARM_VERSION}
+mkdir $PYCHARM_FOLDER
+
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/pycharm.key --create-dirs -o $PYCHARM_FOLDER/config/pycharm.key
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/ide.general.xml --create-dirs -o $PYCHARM_FOLDER/config/options/ide.general.xml
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/project.default.xml --create-dirs -o $PYCHARM_FOLDER/config/options/project.default.xml
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/py_sdk_settings.xml --create-dirs -o $PYCHARM_FOLDER/config/options/py_sdk_settings.xml
 
 
 installer_output "Download and extract intellij ultimate to /opt/IntelliJ"
@@ -73,12 +76,20 @@ yes | sudo android/tools/bin/sdkmanager --licenses
 yes | sudo android/tools/bin/sdkmanager --update
 sudo android/tools/bin/sdkmanager "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
 
+
 installer_output "download intellij settings"
-IJ_CONFIG_DIR=$(find ~ -maxdepth 1 -name '.IntelliJ*')/config
-wget -O $IJ_CONFIG_DIR/idea.key https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/idea.key
-wget -O $IJ_CONFIG_DIR/options/ide.general.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/ide.general.xml
-wget -O $IJ_CONFIG_DIR/options/project.default.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/project.default.xml
-wget -O $IJ_CONFIG_DIR/options/jdk.table.xml https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/jdk.table.xml
+
+#del
+INTELLIJ_DOWNLOAD_FILE='ideaIU-2018.1.3-no-jdk.tar.gz'
+
+[[ $INTELLIJ_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && IDEA_VERSION=${BASH_REMATCH[1]}
+IDEA_FOLDER=~/.IntelliJIdea${IDEA_VERSION}
+mkdir $IDEA_FOLDER
+
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/idea.key --create-dirs -o $IDEA_FOLDER/config/idea.key
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/ide.general.xml --create-dirs -o $IDEA_FOLDER/config/options/ide.general.xml
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/project.default.xml --create-dirs -o $IDEA_FOLDER/config/options/project.default.xml 
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/jdk.table.xml --create-dirs -o $IDEA_FOLDER/config/options/jdk.table.xml
 
 # Processing
 installer_output "Installing Processing."
