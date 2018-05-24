@@ -33,8 +33,8 @@ installer_output "Python 3.6"
 sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get install -y python3.6
-echo "alias python3='python3.6'" >> ~/.bash_aliases
-echo "alias python='python3'" >> ~/.bash_aliases
+echo "alias python3='python3.6'" | sudo tee -a ~/.bash_aliases
+echo "alias python='python3'" | sudo tee -a ~/.bash_aliases
 
 
 installer_output "download and extract pycharm pro to /opt/PyCharm"
@@ -124,7 +124,7 @@ sudo echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <sub-class-of type=\"text/x-csrc\"/>
 <glob pattern=\"*.pde\"/>
 </mime-type>
-</mime-info>" >> /usr/share/mime/packages/processing.xml
+</mime-info>" | sudo tee /usr/share/mime/packages/processing.xml
 
 echo "Creating PYDE XML file..."
 sudo touch /usr/share/mime/packages/processing-py.xml
@@ -136,7 +136,7 @@ sudo echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <sub-class-of type=\"text/x-csrc\"/>
 <glob pattern=\"*.pyde\"/>
 </mime-type>
-</mime-info>" >> /usr/share/mime/packages/processing-py.xml
+</mime-info>" | sudo tee /usr/share/mime/packages/processing-py.xml
 
 echo "Updating MIME database. This might take a minute..."
 sudo update-mime-database /usr/share/mime
@@ -144,7 +144,7 @@ wait $$
 
 echo "Associating file in defaluts.list"
 sudo chmod 666 /usr/share/applications/defaults.list
-sudo echo "text/x-processing=processing.desktop" >> /usr/share/applications/defaults.list
+sudo echo "text/x-processing=processing.desktop" | sudo tee -a /usr/share/applications/defaults.list
 sudo apt-get install -y gstreamer0.10-plugins-good
 
 installer_output "Edit gedit settings"
