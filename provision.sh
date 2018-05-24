@@ -189,7 +189,7 @@ count=0
 while [ "x${XFCE_FILES[count]}" != "x" ]
 do
   XFCE4_FILE=${XFCE_FILES[count]}
-  sudo wget -O ~/.config/$XFCE4_FILE https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/$XFCE4_FILE
+  sudo curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/$XFCE4_FILE --create-dirs -o  ~/.config/$XFCE4_FILE
   count=$(( $count + 1 ))
 done
 
