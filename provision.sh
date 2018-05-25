@@ -25,6 +25,9 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git curl -y
 
+# Chromium bookmarks
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/Bookmarks --create-dirs -o ~/.config/chromium/Default/Bookmarks
+
 installer_output "Git settings"
 git config --global user.email "robuntu@stro.ycdsb.ca"
 git config --global user.name "robuntu"
