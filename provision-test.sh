@@ -44,6 +44,7 @@ XFCE_FILES=(
 
 installer_output "Downloading xfce4 desktop settings and launcher"
 sudo rm -rf ~/.config/xfce4/panel/
+mkdir ~/.config/xfce4/panel/
 sudo chmod 755 ~/.config/xfce4/panel/
 
 count=0
