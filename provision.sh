@@ -174,12 +174,16 @@ dbus-launch gsettings set org.gnome.gedit.preferences.editor syntax-highlighting
 
 # download .config/xfce4 files (Desktop settings and launcher)
 XFCE_FILES=(
+  'user-dirs.dirs'
   'xfce4/panel/launcher-1/15197561291.desktop'
   'xfce4/panel/launcher-11/15197525502.desktop'
   'xfce4/panel/launcher-12/15197526083.desktop'
   'xfce4/panel/launcher-10/15197382572.desktop'
   'xfce4/panel/launcher-8/15197524891.desktop'
   'xfce4/panel/launcher-9/15197382571.desktop'
+  'xfce4/xfconf/xfce-perchannel-xml/thunar.xml'
+  'xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml'
+  'xfce4/xfconf/xfce-perchannel-xml/xfce4-session.xml'
   'xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml'
   'xfce4/xfconf/xfce-perchannel-xml/xsettings.xml'
   'xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml'
