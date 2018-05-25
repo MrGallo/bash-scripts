@@ -1,0 +1,54 @@
+{
+   "checksum": "5b3b181596278e86f96475dceda8fc8f",
+   "roots": {
+      "bookmark_bar": {
+         "children": [ {
+            "date_added": "13171743248561717",
+            "id": "7",
+            "name": "Java 8 API",
+            "type": "url",
+            "url": "https://docs.oracle.com/javase/8/docs/api/"
+         }, {
+            "date_added": "13171743233319089",
+            "id": "6",
+            "name": "Processing Reference",
+            "type": "url",
+            "url": "https://processing.org/reference/"
+         }, {
+            "date_added": "13171743275890915",
+            "id": "8",
+            "name": "Python 3 API",
+            "type": "url",
+            "url": "https://docs.python.org/3/library/"
+         }, {
+            "date_added": "13171743325441123",
+            "id": "9",
+            "name": "PyProcessing Reference",
+            "type": "url",
+            "url": "https://py.processing.org/reference/"
+         } ],
+         "date_added": "13171742901981971",
+         "date_modified": "13171743339906756",
+         "id": "1",
+         "name": "Bookmarks bar",
+         "type": "folder"
+      },
+      "other": {
+         "children": [  ],
+         "date_added": "13171742901981983",
+         "date_modified": "0",
+         "id": "2",
+         "name": "Other bookmarks",
+         "type": "folder"
+      },
+      "synced": {
+         "children": [  ],
+         "date_added": "13171742901981984",
+         "date_modified": "0",
+         "id": "3",
+         "name": "Mobile bookmarks",
+         "type": "folder"
+      }
+   },
+   "version": 1
+}
