@@ -192,10 +192,6 @@ XFCE_FILES=(
 
 installer_output "Downloading xfce4 desktop settings and launcher"
 
-sudo rm -rf ~/.config/xfce4/panel/
-mkdir ~/.confg/xfce4/panel/
-sudo chmod 755 ~/.confg/xfce4/panel/
-
 count=0
 while [ "x${XFCE_FILES[count]}" != "x" ]
 do
