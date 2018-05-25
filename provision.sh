@@ -191,6 +191,9 @@ XFCE_FILES=(
 )
 
 installer_output "Downloading xfce4 desktop settings and launcher"
+sudo rm -rf ~/.config/xfce4/panel/
+mkdir ~/.config/xfce4/panel/
+sudo chmod 755 ~/.config/xfce4/panel/
 
 count=0
 while [ "x${XFCE_FILES[count]}" != "x" ]
@@ -199,6 +202,7 @@ do
   sudo curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/$XFCE4_FILE --create-dirs -o  ~/.config/$XFCE4_FILE
   count=$(( $count + 1 ))
 done
+sudo chmod -R 755 ~/.config/xfce4/panel/
 
 installer_output "Download background image to /usr/share/backgrounds/background1.jpg"
 sudo wget -O /usr/share/backgrounds/background1.jpg https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/xfce4/background1.jpg
