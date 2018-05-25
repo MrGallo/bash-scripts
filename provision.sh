@@ -1,5 +1,5 @@
 # Need to update
-INTELLIJ_DOWNLOAD_FILE='ideaIU-2018.1.3-no-jdk.tar.gz'
+INTELLIJ_DOWNLOAD_FILE='ideaIU-2018.1.4-no-jdk.tar.gz'
 PYCHARM_DOWNLOAD_FILE='pycharm-professional-2018.1.3.tar.gz'
 SDK_TOOLS='sdk-tools-linux-3859397.zip'
 PROCESSING_VERSION="3.3.7"   # http://processing.org
