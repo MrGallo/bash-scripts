@@ -2,8 +2,8 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="25"
-DATE="11 April 2018"
+REVISION="26"
+DATE="05 June 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
