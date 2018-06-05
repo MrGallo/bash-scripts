@@ -84,7 +84,7 @@ sudo python3.6 setup.py build
 sudo python3.6 setup.py install
 
 cd ~
-rm -rf pygame
+sudo rm -rf pygame
 
 
 installer_output "Download and extract intellij ultimate to /opt/IntelliJ"
