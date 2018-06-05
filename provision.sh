@@ -224,3 +224,8 @@ sudo chmod -R 755 ~/.config/xfce4/panel/
 
 installer_output "Download background image to /usr/share/backgrounds/background1.jpg"
 sudo wget -O /usr/share/backgrounds/background1.jpg https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/desktop-config/xfce4/background1.jpg
+
+installer_output "Install RobuntuUpdate"
+sudo curl -O https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/robuntu-update.sh
+source ~/.bashrc
+sudo bash robuntu-install.sh
