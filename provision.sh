@@ -74,6 +74,19 @@ curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/py
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/py_sdk_settings.xml --create-dirs -o $PYCHARM_FOLDER/config/options/py_sdk_settings.xml
 
 
+installer_output "Install PyGame"
+sudo apt-get install python3.6-dev python3-numpy libsdl-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libportmidi-dev libavformat-dev libswscale-dev libjpeg-dev libfreetype6-dev -y
+
+sudo apt-get install mercurial -y && hg clone https://bitbucket.org/pygame/pygame
+cd pygame
+
+sudo python3.6 setup.py build
+sudo python3.6 setup.py install
+
+cd ~
+rm -rf pygame
+
+
 installer_output "Download and extract intellij ultimate to /opt/IntelliJ"
 wget https://download.jetbrains.com/idea/$INTELLIJ_DOWNLOAD_FILE
 sudo tar -C /opt -xzf $INTELLIJ_DOWNLOAD_FILE
