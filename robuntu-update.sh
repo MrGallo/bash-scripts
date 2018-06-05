@@ -111,7 +111,7 @@ do_updates() {
         # cascade with ;&
 
         1) do_update installRobuntuInstall_20180317   ;&
-        2) do_update rewriteAliasFile                 ;;
+        2) do_update appendAliasFile                  ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -133,11 +133,10 @@ do_update () {
 }
 
 
-rewriteAliasFile() {
-    show_update_details "Rewrite .bashrc_aliases file" && return
+appendAliasFile() {
+    show_update_details "Append to .bashrc_aliases file" && return
     
-    sudo rm -f "$ALIAS_FILE"
-    echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee "$ALIAS_FILE"
+    echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee -a "$ALIAS_FILE"
     echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
     source ~/.bashrc
 }
