@@ -110,12 +110,8 @@ do_updates() {
     case "$DO_LEVEL" in
         # cascade with ;&
 
-        1) do_update installTestModeScript_20180309   ;&
-        2) do_update configureTestModeScript_20180309 ;&
-        3) do_update fixBottomPanel_20180309          ;&
-        4) do_update installRobuntuInstall_20180317   ;&
-        5) do_update rewriteAliasFile                 ;&
-        6) do_update setGitGlobal_20180411            ;;
+        1) do_update installRobuntuInstall_20180317   ;&
+        2) do_update rewriteAliasFile                 ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -136,12 +132,6 @@ do_update () {
     echo "$CURRENT_LEVEL" | sudo tee "$LEVEL_FILE"
 }
 
-setGitGlobal_20180411() {
-    show_update_details "Set git global variables" && return
-    
-    git config --global user.name "robuntu"
-    git config --global user.email "robuntu@robuntu.ca"
-}
 
 rewriteAliasFile() {
     show_update_details "Rewrite .bashrc_aliases file" && return
@@ -149,13 +139,12 @@ rewriteAliasFile() {
     sudo rm -f "$ALIAS_FILE"
     echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee "$ALIAS_FILE"
     echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
-    echo "alias test-mode='sudo bash test-mode.sh'" | sudo tee -a "$ALIAS_FILE"
+    source ~/.bashrc
 }
 
 installRobuntuInstall_20180317() {
     
     show_update_details "Install robuntu-install script" && return
-
     
     if [ ! -f "/usr/local/bin/robuntu-install.sh" ]; then
         sudo wget -qO "/usr/local/bin/robuntu-install.sh" "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/robuntu-install.sh"
@@ -163,42 +152,6 @@ installRobuntuInstall_20180317() {
     else
         echo "RobuntuInstall already installed"
     fi
-}
-
-
-fixBottomPanel_20180309() {
-    
-    show_update_details "Set bottom panel lock and adjust position. Set desktop background properties." && return
-    
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/update-files/2/xfce4-panel.xml"
-    wget -qO ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/update-files/2/xfce4-desktop.xml"
-}
-
-
-configureTestModeScript_20180309() {
-    
-    show_update_details "Configure test-mode script." && return
-    
-    echo "Initializing git repository in home directory."
-    echo "Could take a while..."
-    cd ~
-    git init && git add -A 
-    git config --local user.name "robuntu"
-    git config --local user.email "robuntu@stro.ycdsb.ca"
-    git commit -m "Initial commit"
-    echo "... Done!"
-}
-
-
-installTestModeScript_20180309() {
-    
-    show_update_details "Install test-mode script." && return
-
-    echo "Installing test-mode script into /usr/local/bin."
-    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
-    
-    echo "Adding system alias 'test-mode'."
-    echo "alias test-mode='bash test-mode.sh'" | sudo tee -a "$ALIAS_FILE"
 }
 
 
