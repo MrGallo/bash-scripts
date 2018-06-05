@@ -72,18 +72,15 @@ curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/py
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/ide.general.xml --create-dirs -o $PYCHARM_FOLDER/config/options/ide.general.xml
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/project.default.xml --create-dirs -o $PYCHARM_FOLDER/config/options/project.default.xml
 curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/py_sdk_settings.xml --create-dirs -o $PYCHARM_FOLDER/config/options/py_sdk_settings.xml
-
+curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/pycharm/config/options/jdk.table.xml -create-dirs -o $PYCHARM_FOLDER/config/options/jdk.table.xml
 
 installer_output "Install PyGame"
-sudo apt-get install python3.6-dev python3-numpy libsdl-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libportmidi-dev libavformat-dev libswscale-dev libjpeg-dev libfreetype6-dev -y
+sudo apt-get install python3-setuptools python3.6-dev python3-numpy libsdl-dev libsdl-image1.2-dev libsdl-mixer1.2-dev libsdl-ttf2.0-dev libsmpeg-dev libportmidi-dev libavformat-dev libswscale-dev libjpeg-dev libfreetype6-dev -y
 
-sudo apt-get install mercurial -y && hg clone https://bitbucket.org/pygame/pygame
-cd pygame
-
-sudo python3.6 setup.py build
-sudo python3.6 setup.py install
-
-cd ~
+sudo apt-get install mercurial -y &&
+hg clone https://bitbucket.org/pygame/pygame &&
+sudo python3.6 ~/pygame/setup.py build &&
+sudo python3.6 ~/pygame/setup.py install &&
 sudo rm -rf pygame
 
 
