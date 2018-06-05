@@ -17,34 +17,14 @@ APPS=(
 )
 
 APP_DESCRIPTIONS=(
-    "Locks certain inernet sites when enabled.\n\tReverts linux file state when disabled."
     "Script to provide quick and easy Robuntu image updates without having to \n\tre-install the entire image on every chromebook."
     "Framework for creating web apps with Java (or Scala).\n\tVisit www.playframework.com for more info."
 )
 
 APP_INSTALL=( 
-    installTestMode
     installRobuntuUpdate
     installPlay 
 )
-
-installTestMode() {
-    echo "Installing test-mode script into /usr/local/bin."
-    sudo wget -qO /usr/local/bin/test-mode.sh "https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/test-mode.sh"
-    
-    echo "Adding system alias 'test-mode'."
-    echo "alias test-mode='sudo bash test-mode.sh'" | sudo tee -a ~/.bash_aliases
-    
-    echo "Configuring test-mode"
-    echo "Initializing git repository in home directory."
-    echo "Could take a while..."
-    cd ~
-    git init && git add -A 
-    git config --local user.name "robuntu"
-    git config --local user.email "robuntu@stro.ycdsb.ca"
-    git commit -m "Initial commit"
-    echo "... Done!"
-}
 
 installRobuntuUpdate() {
     local SCRIPT_NAME="robuntu-update.sh"
@@ -69,18 +49,10 @@ installPlay() {
 
 # --------------------------------------------------------------
 APP_ALREADY_INSTALLED=(
-    isInstalledTestMode
     isInstalledRobuntuUpdate
     isInstalledPlay    
 )
 
-isInstalledTestMode() {
-    if [ -f /usr/local/bin/test-mode.sh ]; then
-        true
-    else
-        false
-    fi
-}
 
 isInstalledRobuntuUpdate() {
     if [ -f "/usr/local/bin/robuntu-update.sh" ]; then
