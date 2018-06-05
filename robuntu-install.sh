@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="1.0.8"
+VERSION="1.0.9"
 DATE="05 June 2018"
 AUTHOR="Mr. Gallo"
 
@@ -11,7 +11,6 @@ ALIAS_FILE=~/.bash_aliases
 ARG1="$1"
 ARG2="$2"
 APPS=(
-    "TestMode"
     "RobuntuUpdate"
     "Play Framework"
 )
