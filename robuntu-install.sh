@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="1.0.7"
-DATE="06 April 2018"
+VERSION="1.0.8"
+DATE="05 June 2018"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
