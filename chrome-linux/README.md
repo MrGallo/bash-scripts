@@ -3,10 +3,10 @@
 sudo apt-get install openjdk-8-jdk
 ```
 
-## Python Pip3
-Required for `ide-python` atom package.
+## Pip and PyGame
 ```sh
 sudo apt-get -y install python-pip
+python3 -m pip install -U pygame --user
 ```
 
 ## Atom
