@@ -1,8 +1,6 @@
 # Need to update
-INTELLIJ_DOWNLOAD_FILE='ideaIU-2018.1.4-no-jdk.tar.gz'
-PYCHARM_DOWNLOAD_FILE='pycharm-professional-2018.1.4.tar.gz'
-SDK_TOOLS='sdk-tools-linux-3859397.zip'
-PROCESSING_VERSION="3.3.7"   # http://processing.org
+PYCHARM_DOWNLOAD_FILE='pycharm-professional-2018.2.4.tar.gz'
+PROCESSING_VERSION="3.4"   # http://processing.org
 #--
 
 # provision.sh commands
@@ -32,9 +30,9 @@ installer_output "Git settings"
 git config --global user.email "robuntu@stro.ycdsb.ca"
 git config --global user.name "robuntu"
 
-installer_output "Java 8"
-sudo add-apt-repository -y ppa:webupd8team/java
-sudo apt-get update
+# installer_output "Java 8"
+# sudo add-apt-repository -y ppa:webupd8team/java
+# sudo apt-get update
 
 # Work-around until webupd8 is updated
 # sudo sed -i 's|JAVA_VERSION=8u161|JAVA_VERSION=8u172|' /var/lib/dpkg/info/oracle-java8-installer.*
@@ -43,8 +41,8 @@ sudo apt-get update
 # sudo sed -i 's|J_DIR=jdk1.8.0_161|J_DIR=jdk1.8.0_172|' /var/lib/dpkg/info/oracle-java8-installer.*
 # End work-around
 
-echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-sudo apt-get install -y oracle-java8-installer
+# echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+# sudo apt-get install -y oracle-java8-installer
 
 
 installer_output "Python 3.6"
@@ -84,37 +82,37 @@ sudo python3.6 ~/pygame/setup.py install &&
 sudo rm -rf pygame
 
 
-installer_output "Download and extract intellij ultimate to /opt/IntelliJ"
-wget https://download.jetbrains.com/idea/$INTELLIJ_DOWNLOAD_FILE
-sudo tar -C /opt -xzf $INTELLIJ_DOWNLOAD_FILE
-find /opt/ -maxdepth 1 -name 'idea*' -exec sudo mv "{}" /opt/IntelliJ/ \;
-sudo rm -rf $INTELLIJ_DOWNLOAD_FILE
+# installer_output "Download and extract intellij ultimate to /opt/IntelliJ"
+# wget https://download.jetbrains.com/idea/$INTELLIJ_DOWNLOAD_FILE
+# sudo tar -C /opt -xzf $INTELLIJ_DOWNLOAD_FILE
+# find /opt/ -maxdepth 1 -name 'idea*' -exec sudo mv "{}" /opt/IntelliJ/ \;
+# sudo rm -rf $INTELLIJ_DOWNLOAD_FILE
 
 
 
-installer_output "Android install"
-sudo apt-get install -y libc6-dev-i386 lib32z1 default-jdk
+# installer_output "Android install"
+# sudo apt-get install -y libc6-dev-i386 lib32z1 default-jdk
 
-wget https://dl.google.com/android/repository/$SDK_TOOLS
-mkdir android
-unzip $SDK_TOOLS -d android/
-rm -rf $SDK_TOOLS
+# wget https://dl.google.com/android/repository/$SDK_TOOLS
+# mkdir android
+# unzip $SDK_TOOLS -d android/
+# rm -rf $SDK_TOOLS
 
-yes | sudo android/tools/bin/sdkmanager --licenses
-yes | sudo android/tools/bin/sdkmanager --update
-sudo android/tools/bin/sdkmanager "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
+# yes | sudo android/tools/bin/sdkmanager --licenses
+# yes | sudo android/tools/bin/sdkmanager --update
+# sudo android/tools/bin/sdkmanager "platforms;android-27" "build-tools;27.0.3" "extras;google;m2repository" "extras;android;m2repository" --verbose
 
 
-installer_output "download intellij settings"
+# installer_output "download intellij settings"
 
-[[ $INTELLIJ_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && IDEA_VERSION=${BASH_REMATCH[1]}
-IDEA_FOLDER=~/.IntelliJIdea${IDEA_VERSION}
-mkdir $IDEA_FOLDER
+# [[ $INTELLIJ_DOWNLOAD_FILE =~ -([0-9]{4}.[0-9]{1}) ]] && IDEA_VERSION=${BASH_REMATCH[1]}
+# IDEA_FOLDER=~/.IntelliJIdea${IDEA_VERSION}
+# mkdir $IDEA_FOLDER
 
-curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/idea.key --create-dirs -o $IDEA_FOLDER/config/idea.key
-curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/ide.general.xml --create-dirs -o $IDEA_FOLDER/config/options/ide.general.xml
-curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/project.default.xml --create-dirs -o $IDEA_FOLDER/config/options/project.default.xml 
-curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/jdk.table.xml --create-dirs -o $IDEA_FOLDER/config/options/jdk.table.xml
+# curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/idea.key --create-dirs -o $IDEA_FOLDER/config/idea.key
+# curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/ide.general.xml --create-dirs -o $IDEA_FOLDER/config/options/ide.general.xml
+# curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/project.default.xml --create-dirs -o $IDEA_FOLDER/config/options/project.default.xml 
+# curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/intellij/config/options/jdk.table.xml --create-dirs -o $IDEA_FOLDER/config/options/jdk.table.xml
 
 # Processing
 installer_output "Installing Processing."
