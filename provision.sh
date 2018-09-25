@@ -21,6 +21,7 @@ echo "robuntu" | sudo -S echo "Begin image provisioning"
 
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt-get autoremove
 sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git curl -y
 
 # Chromium bookmarks
