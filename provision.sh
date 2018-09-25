@@ -189,7 +189,6 @@ XFCE_FILES=(
   'xfce4/panel/launcher-11/15197525502.desktop'
   'xfce4/panel/launcher-12/15197526083.desktop'
   'xfce4/panel/launcher-10/15197382572.desktop'
-  'xfce4/panel/launcher-8/15197524891.desktop'
   'xfce4/panel/launcher-9/15197382571.desktop'
   'xfce4/xfconf/xfce-perchannel-xml/thunar.xml'
   'xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml'
