@@ -85,11 +85,6 @@
       <property name="style" type="uint" value="1"/>
     </property>
     <property name="plugin-4" type="string" value="power-manager-plugin"/>
-    <property name="plugin-8" type="string" value="launcher">
-      <property name="items" type="array">
-        <value type="string" value="15197524891.desktop"/>
-      </property>
-    </property>
     <property name="plugin-11" type="string" value="launcher">
       <property name="items" type="array">
         <value type="string" value="15197525502.desktop"/>
