@@ -50,7 +50,6 @@ sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get install -y python3.6
 echo "alias python3='python3.6'" | sudo tee -a ~/.bash_aliases
-echo "alias python='python3'" | sudo tee -a ~/.bash_aliases
 
 
 installer_output "download and extract pycharm pro to /opt/PyCharm"
