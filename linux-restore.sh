@@ -18,3 +18,6 @@ sudo edit-chroot -d xenial -y  # remove existing image
 
 sudo sh ~/Downloads/crouton -f ~/Downloads/$BACKUP_FILE
 sudo sh ~/Downloads/crouton -u -n xenial
+
+sudo rm -f ~/Downloads/crouton
+sudo rm -f ~/Downloads/$BACKUP_FILE
