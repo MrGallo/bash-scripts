@@ -1,6 +1,8 @@
 #!/bin/bash
 BACKUP_FILE=$(curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/image-file-name)
 
+sudo edit-chroot -d xenial -y  # remove existing image
+
 
 [ -f ./$BACKUP_FILE ] && {  # Backup file is on USB
     sudo cp ./$BACKUP_FILE ~/Downloads/
