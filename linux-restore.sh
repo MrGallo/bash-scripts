@@ -15,3 +15,4 @@ BACKUP_FILE=$(curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/maste
 }
 
 sudo sh ~/Downloads/crouton -f ~/Downloads/$BACKUP_FILE
+sudo sh ~/Downloads/crouton -u -n xenial
