@@ -1,8 +1,8 @@
 #!/bin/bash
 
 SCRIPT_NAME=`basename "$0"`
-VERSION="1.0.9"
-DATE="05 June 2018"
+VERSION="1.0.10"
+DATE="25 January 2019"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -17,12 +17,10 @@ APPS=(
 
 APP_DESCRIPTIONS=(
     "Script to provide quick and easy Robuntu image updates without having to \n\tre-install the entire image on every chromebook."
-    "Framework for creating web apps with Java (or Scala).\n\tVisit www.playframework.com for more info."
 )
 
 APP_INSTALL=( 
     installRobuntuUpdate
-    installPlay 
 )
 
 installRobuntuUpdate() {
@@ -37,32 +35,15 @@ installRobuntuUpdate() {
   
 }
 
-installPlay() { 
-    echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
-    sudo apt-get update
-    sudo apt-get install sbt
-}
-
 
 
 # --------------------------------------------------------------
 APP_ALREADY_INSTALLED=(
-    isInstalledRobuntuUpdate
-    isInstalledPlay    
-)
+    isInstalledRobuntuUpdate)
 
 
 isInstalledRobuntuUpdate() {
     if [ -f "/usr/local/bin/robuntu-update.sh" ]; then
-        true
-    else
-        false
-    fi
-}
-
-isInstalledPlay() { 
-    if [ -d ~/.ivy2 ] && [ -d ~/.sbt ]; then
         true
     else
         false
