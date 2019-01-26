@@ -1,6 +1,6 @@
 # Need to update
-PYCHARM_DOWNLOAD_FILE='pycharm-professional-2018.2.4.tar.gz'
-PROCESSING_VERSION="3.4"   # http://processing.org
+PYCHARM_DOWNLOAD_FILE='pycharm-professional-2018.3.3.tar.gz'
+# PROCESSING_VERSION="3.4"   # http://processing.org
 #--
 
 # provision.sh commands
@@ -22,10 +22,11 @@ echo "robuntu" | sudo -S echo "Begin image provisioning"
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get autoremove
-sudo apt-get install file-roller gedit software-center chromium-browser ttf-ubuntu-font-family git curl -y
+sudo apt-get install file-roller gedit software-center ttf-ubuntu-font-family git curl -y
 
 # Chromium bookmarks
-curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/Bookmarks --create-dirs -o ~/.config/chromium/Default/Bookmarks
+# curl https://raw.githubusercontent.com/MrGallo/robuntu-admin/master/provision/Bookmarks --create-dirs -o ~/.config/chromium/Default/Bookmarks
+# TODO: change to chrome bookmarks
 
 installer_output "Git settings"
 git config --global user.email "robuntu@stro.ycdsb.ca"
@@ -46,10 +47,11 @@ git config --global user.name "robuntu"
 # sudo apt-get install -y oracle-java8-installer
 
 
-installer_output "Python 3.6"
+installer_output "Python 3.7"
 sudo add-apt-repository -y ppa:deadsnakes/ppa
 sudo apt-get update
-sudo apt-get install -y python3.6
+sudo apt-get install -y python3.7 python3-pip
+python3.7 -m pip install arcade
 echo "alias python3='python3.6'" | sudo tee -a ~/.bash_aliases
 
 
