@@ -11,9 +11,7 @@ PROVISION_FILE="provision.sh"
 # install xenial image
 # duration: 10 min
 curl -O https://raw.githubusercontent.com/dnschneid/crouton/master/installer/crouton
-sudo sh crouton -r "$DIST" -t xfce,touch,extension
-
-sudo sh -e crouton -r "$DIST" -t keyboard -u
+sudo sh crouton -r "$DIST" -t xfce,touch,extension,keyboard,chrome
 
 # run provision.sh in chroot 
 # duration 16 min
