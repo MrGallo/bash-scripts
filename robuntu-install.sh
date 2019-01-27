@@ -12,7 +12,6 @@ ARG1="$1"
 ARG2="$2"
 APPS=(
     "RobuntuUpdate"
-    "Play Framework"
 )
 
 APP_DESCRIPTIONS=(
@@ -39,7 +38,8 @@ installRobuntuUpdate() {
 
 # --------------------------------------------------------------
 APP_ALREADY_INSTALLED=(
-    isInstalledRobuntuUpdate)
+    isInstalledRobuntuUpdate
+)
 
 
 isInstalledRobuntuUpdate() {
