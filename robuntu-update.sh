@@ -2,7 +2,7 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="27"
+REVISION="28"
 DATE="20 March 2019"
 AUTHOR="Mr. Gallo"
 
@@ -112,7 +112,8 @@ do_updates() {
 
         1) do_update installRobuntuInstall_20180317   ;&
         2) do_update appendAliasFile                  ;&
-        3) do_update updatePythonArcade_20190320      ;;
+        3) do_update updatePythonArcade_20190320      ;&
+        4) do_update disable_power_button_logout_20190320 ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -155,9 +156,15 @@ installRobuntuInstall_20180317() {
 }
 
 updatePythonArcade_20190320() {
-    show_update_details "Install robuntu-install script" && return
+    show_update_details "Update Python Arcade" && return
     
     sudo python3.7 -m pip install arcade --upgrade
+}
+
+disable_power_button_logout_20190320() {
+    show_update_details "Disable Powerbutton Logout" && return
+    
+    xfconf-query -c xfce4-power-manager -p /xfce4-power-manager/power-button-action -s 0
 }
 
 
