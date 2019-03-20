@@ -2,8 +2,8 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="26"
-DATE="05 June 2018"
+REVISION="27"
+DATE="20 March 2019"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -111,7 +111,8 @@ do_updates() {
         # cascade with ;&
 
         1) do_update installRobuntuInstall_20180317   ;&
-        2) do_update appendAliasFile                  ;;
+        2) do_update appendAliasFile                  ;&
+        3) do_update updatePythonArcade_20190320      ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -151,6 +152,12 @@ installRobuntuInstall_20180317() {
     else
         echo "RobuntuInstall already installed"
     fi
+}
+
+updatePythonArcade_20190320() {
+    show_update_details "Install robuntu-install script" && return
+    
+    sudo python3.7 -m pip install arcade --upgrade
 }
 
 
