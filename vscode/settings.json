@@ -12,5 +12,6 @@
     "editor.rulers": [
         79
     ],
-    "window.zoomLevel": -1
+    "window.zoomLevel": -1,
+    "terminal.integrated.rendererType": "dom"
 }
