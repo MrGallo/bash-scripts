@@ -13,5 +13,7 @@
         79
     ],
     "window.zoomLevel": -1,
-    "terminal.integrated.rendererType": "dom"
+    "terminal.integrated.rendererType": "dom",
+    "workbench.sideBar.location": "left",
+    "open-in-browser.default": "chrome"
 }
