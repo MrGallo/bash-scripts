@@ -2,8 +2,8 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="29"
-DATE="1 August 2019"
+REVISION="30"
+DATE="16 September 2019"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -111,7 +111,8 @@ do_updates() {
         # cascade with ;&
 
         1) do_update installRobuntuInstall_20180317   ;&
-        2) do_update appendAliasFile                  ;;
+        2) do_update appendAliasFile                  ;&
+        3) do_update installUflash                    ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -139,6 +140,11 @@ appendAliasFile() {
     echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee -a "$ALIAS_FILE"
     echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
     source ~/.bashrc
+}
+
+installUflash() {
+    show_update_details "Install uflash for microbit" && return
+    sudo python3.7 -m pip install uflash
 }
 
 installRobuntuInstall_20180317() {
