@@ -145,6 +145,7 @@ appendAliasFile() {
 
 installMypyAndPycodestle() {
     show_update_details "Install mypy and pycodestyle" && return
+    sudo python3.7 -m pip uninstall pep8 -y
     sudo python3.7 -m pip install mypy pycodestyle
 }
 
