@@ -112,7 +112,8 @@ do_updates() {
 
         1) do_update installRobuntuInstall_20180317   ;&
         2) do_update appendAliasFile                  ;&
-        3) do_update installUflash                    ;;
+        3) do_update installUflash                    ;&
+        4) do_update installMypyAndPycodestle         ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -140,6 +141,11 @@ appendAliasFile() {
     echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee -a "$ALIAS_FILE"
     echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
     source ~/.bashrc
+}
+
+installMypyAndPycodestle() {
+    show_update_details "Install mypy and pycodestyle" && return
+    sudo python3.7 -m pip install mypy pycodestyle
 }
 
 installUflash() {
