@@ -113,7 +113,8 @@ do_updates() {
         1) do_update installRobuntuInstall_20180317   ;&
         2) do_update appendAliasFile                  ;&
         3) do_update installUflash                    ;&
-        4) do_update installMypyAndPycodestle         ;;
+        4) do_update installMypyAndPycodestle         ;&
+        5) do_update update_arcade_2019_12_17         ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -132,6 +133,12 @@ do_update () {
     # update level file
     CURRENT_LEVEL=$(($CURRENT_LEVEL + 1))
     echo "$CURRENT_LEVEL" | sudo tee "$LEVEL_FILE"
+}
+
+update_arcade_2019_12_17() {
+    show_update_details "Update python arcade" && return
+    
+    python3.7 -m pip install --upgrade arcade --user
 }
 
 
