@@ -2,8 +2,8 @@
 
 SCRIPT_NAME=`basename "$0"`
 VERSION="1"
-REVISION="32"
-DATE="17 December 2019"
+REVISION="33"
+DATE="17 January 2020"
 AUTHOR="Mr. Gallo"
 
 FILE_PATH="/usr/local/bin/"
@@ -111,10 +111,7 @@ do_updates() {
         # cascade with ;&
 
         1) do_update installRobuntuInstall_20180317   ;&
-        2) do_update appendAliasFile                  ;&
-        3) do_update installUflash                    ;&
-        4) do_update installMypyAndPycodestle         ;&
-        5) do_update update_arcade_2019_12_17         ;;
+        2) do_update update_arcade_2020_01_17         ;;
         *) echo "No updates." && exit 0
     esac
 }
@@ -135,30 +132,10 @@ do_update () {
     echo "$CURRENT_LEVEL" | sudo tee "$LEVEL_FILE"
 }
 
-update_arcade_2019_12_17() {
+update_arcade_2020_01_17() {
     show_update_details "Update python arcade" && return
     
-    python3.7 -m pip install --upgrade arcade --user
-}
-
-
-appendAliasFile() {
-    show_update_details "Append to .bashrc_aliases file" && return
-    
-    echo "alias robuntu-update='sudo bash robuntu-update.sh'" | sudo tee -a "$ALIAS_FILE"
-    echo "alias robuntu-install='sudo bash robuntu-install.sh'" | sudo tee -a "$ALIAS_FILE"
-    source ~/.bashrc
-}
-
-installMypyAndPycodestle() {
-    show_update_details "Install mypy and pycodestyle" && return
-    sudo python3.7 -m pip uninstall pep8 -y
-    sudo python3.7 -m pip install mypy pycodestyle
-}
-
-installUflash() {
-    show_update_details "Install uflash for microbit" && return
-    sudo python3.7 -m pip install uflash
+    python3.8 -m pip install --upgrade arcade --upgrade-strategy eager --user
 }
 
 installRobuntuInstall_20180317() {
