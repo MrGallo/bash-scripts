@@ -1,19 +1,19 @@
 {
+    "python.pythonPath": "/usr/bin/python3.8",
+    "workbench.colorTheme": "Visual Studio Light",
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Default Light+",
-    "window.restoreWindows": "none",
-    "files.autoSave": "afterDelay",
-    
-    "python.jediEnabled": true,
     "python.linting.pylintEnabled": false,
-    "python.linting.pep8Enabled": true,
+    "python.linting.pycodestyleEnabled": true,
+    "python.linting.mypyEnabled": true,
     "python.linting.enabled": true,
-    "python.pythonPath": "/usr/bin/python3.7",
+    "workbench.startupEditor": "newUntitledFile",
     "editor.rulers": [
         79
     ],
     "window.zoomLevel": -1,
     "terminal.integrated.rendererType": "dom",
-    "workbench.sideBar.location": "left",
-    "open-in-browser.default": "chrome"
+    "files.autoSave": "afterDelay",
+    "window.restoreFullscreen": true,
+    "window.restoreWindows": "none",
+    "files.hotExit": "off"
 }
